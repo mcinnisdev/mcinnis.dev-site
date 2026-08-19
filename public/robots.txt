@@ -1,0 +1,5 @@
+# mcinnis.dev
+User-agent: *
+Allow: /
+
+Sitemap: https://mcinnis.dev/sitemap-index.xml

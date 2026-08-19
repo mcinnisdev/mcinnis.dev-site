@@ -11,6 +11,9 @@ import PortraitSlot from '../components/PortraitSlot.astro';
 import headshot from '../assets/headshot.jpg';
 import Button from '../components/Button.astro';
 import { site, socials, aboutStats } from '../data/site';
+import { siteBase, personSchema, breadcrumbSchema } from '../utils/seo';
+
+const baseUrl = siteBase(Astro.site);
 
 const focus = [
   {
@@ -33,7 +36,9 @@ const focus = [
 
 <Base
   title="About"
-  description="Nick McInnis — 10+ years in IT, now building agentic tools and web products from Michigan."
+  description="Ten years across IT — service desk, M365 and Entra administration, automation — now building agentic tools and web products from Michigan."
+  type="profile"
+  schema={[personSchema(baseUrl), breadcrumbSchema(baseUrl, [{ name: 'About', path: '/about' }])]}
 >
   <section class="about-hero">
     <div class="hatch" aria-hidden="true"></div>

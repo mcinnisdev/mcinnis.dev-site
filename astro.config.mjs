@@ -6,6 +6,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://mcinnis.dev',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/404'),
+      changefreq: 'weekly',
+      lastmod: new Date(),
+    }),
+  ],
   build: { inlineStylesheets: 'auto' },
 });

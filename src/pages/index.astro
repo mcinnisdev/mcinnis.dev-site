@@ -10,18 +10,25 @@ import PostListItem from '../components/PostListItem.astro';
 import StatRow from '../components/StatRow.astro';
 import { site, heroStats } from '../data/site';
 import { formatDate } from '../utils/format';
+import { siteBase, personSchema, websiteSchema } from '../utils/seo';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const featured = projects.slice(0, 2);
 
+const baseUrl = siteBase(Astro.site);
+
 const posts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 ---
 
-<Base>
+<Base
+  description="Nick McInnis — 10+ years in IT, now building agentic tools, automation and web products from Michigan. Projects, writing and experiments."
+  type="profile"
+  schema={[personSchema(baseUrl), websiteSchema(baseUrl)]}
+>
   {/* ── hero: oversized name, hatch plate, skewed terracotta rail ── */}
   <section class="hero">
     <div class="hatch" aria-hidden="true"></div>

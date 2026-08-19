@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Button from '../../components/Button.astro';
 import Tag from '../../components/Tag.astro';
 import { formatDate, isoDate } from '../../utils/format';
+import { siteBase, personSchema, blogPostingSchema, breadcrumbSchema } from '../../utils/seo';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
@@ -14,9 +15,27 @@ interface Props { post: CollectionEntry<'posts'> }
 const { post } = Astro.props;
 const { Content } = await render(post);
 const d = post.data;
+
+const baseUrl = siteBase(Astro.site);
+const schema = [
+  personSchema(baseUrl),
+  blogPostingSchema(baseUrl, { ...d, slug: post.id }),
+  breadcrumbSchema(baseUrl, [
+    { name: 'Blog', path: '/blog' },
+    { name: d.title, path: `/blog/${post.id}` },
+  ]),
+];
 ---
 
-<Base title={d.title} description={d.excerpt}>
+<Base
+  title={d.title}
+  description={d.excerpt}
+  type="article"
+  publishedTime={d.date}
+  tags={d.tags}
+  imageAlt={`${d.title} — mcinnis.dev`}
+  schema={schema}
+>
   <div class="post-head container container--prose">
     <Button variant="ghost" size="sm" icon="arrow-left" iconPosition="left" href="/blog" class="post-head__back">
       All posts

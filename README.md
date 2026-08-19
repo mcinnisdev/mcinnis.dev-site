@@ -10,7 +10,8 @@ and the site follows.
 ```bash
 npm install
 npm run dev      # http://localhost:4321
-npm run build    # → dist/
+npm run build    # regenerates share cards, then builds → dist/
+npm run og       # regenerate share cards only
 npm run preview  # serve dist/
 npm run check    # astro check (types + templates)
 ```
@@ -20,8 +21,12 @@ npm run check    # astro check (types + templates)
 ```
 design-system/            the brand system — tokens, components, guidelines, UI kit
 public/
-  assets/                 logo.svg, logo-paper.svg, logo-ink.svg (+ headshot.jpg when it exists)
+  assets/                 logo.svg, logo-paper.svg, logo-ink.svg
   icons/                  Lucide glyphs, vendored from lucide-static@0.544.0
+  og/                     generated 1200×630 share cards (committed)
+  robots.txt              _redirects
+scripts/
+  og.mjs                  share-card generator (runs on prebuild)
 src/
   components/             the design system, ported to .astro
   layouts/Base.astro      head, fonts, nav, footer
@@ -29,7 +34,9 @@ src/
     projects/*.md         one file per project
     posts/*.md            one file per post
   content.config.ts       collection schemas
+  assets/                 mcinnis-headshot.png (master), headshot.jpg (4:5 crop, used)
   data/site.ts            name, email, nav, socials, stat rails
+  utils/seo.ts            share-card resolution + JSON-LD builders
   pages/                  index, projects, blog, about, 404, rss.xml
   styles/global.css       token imports + page-level primitives
   utils/format.ts         date formatting
@@ -87,12 +94,43 @@ These come from `design-system/readme.md`; the short version:
 - **The 18.4° cut is structural**, never ornament on body text: nav slabs, hero rails, the project
   card's index wedge, section hatch bands.
 
+## SEO and share metadata
+
+Every page gets, from `src/layouts/Base.astro`:
+
+- title, meta description, canonical URL, and a `robots` directive
+  (`max-image-preview:large`; `/404` is `noindex, follow`)
+- full Open Graph — type, title, description, url, locale, and an image with
+  `type`/`width`/`height`/`alt`
+- Twitter `summary_large_image` with its own title, description, image and alt
+- `article:published_time`, `article:modified_time`, `article:author` and one
+  `article:tag` per tag on posts
+- JSON-LD, self-contained per page: `Person` + `WebSite` on home, `Person` on about,
+  `Person` + `BlogPosting` on posts, `Person` + `CreativeWork` on projects, and a
+  `BreadcrumbList` on everything below the root
+
+Plus `public/robots.txt`, a sitemap at `/sitemap-index.xml` (404 excluded), and an
+RSS feed at `/rss.xml` with atom self-link, per-item categories and enclosures.
+
+### Share cards
+
+`scripts/og.mjs` generates a 1200×630 card per route into `public/og/`, built from the
+same tokens as the site — ink ground, the 18.4° hatch, skewed terracotta rails, and the
+portrait on the home card. Two layers: an SVG base rasterised by sharp (exact rail
+geometry, which satori's `skewX` does not give) with satori type composited on top
+(glyphs become paths, so no system fonts are needed).
+
+It runs on `prebuild`, so cards can't drift from content. It is non-fatal by design —
+the cards are committed, so a failure logs a warning and leaves the committed set in
+place rather than breaking a deploy.
+
+Naming follows the route with slashes flattened to dashes: `/projects/ink` →
+`og/projects-ink.jpg`. `ogPath()` in `src/utils/seo.ts` checks the file exists at build
+and falls back to `og/default.jpg`, so a new route without a card degrades gracefully
+instead of shipping a broken image.
+
 ## Known gaps
 
-- **No headshot.** `PortraitSlot` renders a labelled slot on `/about`. Drop a file at
-  `public/assets/headshot.jpg` (4:5) and it swaps itself in — no code change.
-- **No social share image.** Open Graph currently points at `logo.svg`. A real 1200×630 card would
-  be better; set it in `src/layouts/Base.astro`.
 - **Fonts come from the Google Fonts CDN** (Space Grotesk / Newsreader / JetBrains Mono). Self-host
   in `public/fonts/` if you want the CDN request gone.
 - **Two posts.** Both carried over from the old site. See the note below.

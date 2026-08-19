@@ -2,23 +2,46 @@
 import NavBar from '../components/NavBar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { site } from '../data/site';
+import { ogPath, siteBase } from '../utils/seo';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
-  /** Absolute or root-relative path to a social image. */
+  /** Root-relative share card. Defaults to the card generated for this route. */
   image?: string;
+  /** Alt text for the share card. */
+  imageAlt?: string;
+  type?: 'website' | 'article' | 'profile';
+  /** Articles only. */
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  /** JSON-LD graphs to emit for this page. */
+  schema?: unknown[];
 }
+
 const {
   title,
   description = site.description,
-  image = '/assets/logo.svg',
+  image,
+  imageAlt,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  tags = [],
+  noindex = false,
+  schema = [],
 } = Astro.props;
 
+const base = siteBase(Astro.site);
+const pathname = Astro.url.pathname;
+
 const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).toString();
-const ogImage = new URL(image, Astro.site ?? site.url).toString();
+const canonical = `${base}${pathname === '/' ? '' : pathname.replace(/\/$/, '')}` || base;
+const ogImage = `${base}${image ?? ogPath(pathname)}`;
+const ogImageAlt = imageAlt ?? `${title ?? site.name} — ${site.domain}`;
 ---
 
 <!doctype html>
@@ -29,27 +52,61 @@ const ogImage = new URL(image, Astro.site ?? site.url).toString();
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <meta name="author" content={site.name} />
+    <meta name="generator" content={Astro.generator} />
+
     <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+    <link rel="apple-touch-icon" href="/assets/logo.svg" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#14100e" />
-    <meta name="author" content={site.name} />
 
-    <meta property="og:type" content="website" />
+    {/* --- Open Graph --- */}
+    <meta property="og:type" content={type} />
     <meta property="og:site_name" content={site.domain} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    {type === 'article' && publishedTime && (
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+    )}
+    {type === 'article' && (modifiedTime ?? publishedTime) && (
+      <meta property="article:modified_time" content={(modifiedTime ?? publishedTime)!.toISOString()} />
+    )}
+    {type === 'article' && <meta property="article:author" content={site.name} />}
+    {type === 'article' && tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    {/* --- Twitter / X --- */}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
+    {/* --- identity + feeds --- */}
+    <link rel="me" href="https://github.com/mcinnisdev" />
     <link rel="alternate" type="application/rss+xml" title={`${site.name} — Writing`} href="/rss.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
+    {/* --- fonts --- */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
     />
+
+    {schema.map((graph) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />
+    ))}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

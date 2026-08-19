@@ -5,17 +5,20 @@ import Kicker from '../../components/Kicker.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import SlantRule from '../../components/SlantRule.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import { siteBase, breadcrumbSchema } from '../../utils/seo';
 
 const all = (await getCollection('projects', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const baseUrl = siteBase(Astro.site);
 const active = all.filter((p) => p.data.status !== 'archived');
 const archived = all.filter((p) => p.data.status === 'archived');
 ---
 
 <Base
   title="Projects"
-  description="Products, internal tools and automation — what Nick McInnis is building and has shipped."
+  description="Ink, Ticulate, Maestro, SkyOps and Even After — the products, internal tools and automation Nick McInnis has designed and built."
+  schema={[breadcrumbSchema(baseUrl, [{ name: 'Projects', path: '/projects' }])]}
 >
   <section class="page-hero">
     <div class="hatch" aria-hidden="true"></div>

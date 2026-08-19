@@ -7,6 +7,7 @@ import StatusBadge from '../../components/StatusBadge.astro';
 import Tag from '../../components/Tag.astro';
 import Card from '../../components/Card.astro';
 import { formatDate } from '../../utils/format';
+import { siteBase, personSchema, projectSchema, breadcrumbSchema } from '../../utils/seo';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ data }) => !data.draft);
@@ -25,9 +26,24 @@ const descriptor = restParts.join(' — ');
 const related = (await getCollection('posts', ({ data }) => !data.draft))
   .filter((post) => post.data.project === project.id)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const baseUrl = siteBase(Astro.site);
+const schema = [
+  personSchema(baseUrl),
+  projectSchema(baseUrl, { ...d, slug: project.id }),
+  breadcrumbSchema(baseUrl, [
+    { name: 'Projects', path: '/projects' },
+    { name, path: `/projects/${project.id}` },
+  ]),
+];
 ---
 
-<Base title={name} description={d.summary}>
+<Base
+  title={name}
+  description={d.summary}
+  imageAlt={`${d.title} — mcinnis.dev`}
+  schema={schema}
+>
   <section class="detail-hero">
     <div class="hatch" aria-hidden="true"></div>
     <div class="detail-hero__rail" aria-hidden="true"></div>
