@@ -1,0 +1,36 @@
+---
+/** Ink slab, hairline border, 14px radius. Interactive cards lift 2px to a terracotta border. */
+interface Props {
+  variant?: 'raised' | 'sunken' | 'accent' | 'outline';
+  interactive?: boolean;
+  accentEdge?: boolean;
+  class?: string;
+}
+const { variant = 'raised', interactive = false, accentEdge = false, class: className } = Astro.props;
+---
+<div class:list={['card', `card--${variant}`, interactive && 'card--interactive', className]}>
+  {accentEdge && <span class="card__edge" aria-hidden="true" />}
+  <slot />
+</div>
+
+<style>
+  .card {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-5);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-1);
+    transition: var(--transition-control);
+  }
+  .card--raised  { background: var(--surface-card);        border: 1px solid var(--border-subtle); }
+  .card--sunken  { background: var(--surface-sunken);      border: 1px solid var(--border-hairline); }
+  .card--accent  { background: var(--surface-accent-soft); border: 1px solid var(--terracotta-700); }
+  .card--outline { background: transparent;                border: 1px solid var(--border-strong); }
+
+  .card--interactive:hover {
+    transform: var(--lift-hover);
+    box-shadow: var(--shadow-2);
+    border-color: var(--terracotta-500);
+  }
+  .card__edge { position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--terracotta-500); }
+</style>

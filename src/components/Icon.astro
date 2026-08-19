@@ -1,0 +1,42 @@
+---
+/**
+ * Lucide glyph rendered as a currentColor CSS mask — never inline SVG,
+ * never an icon font. Files are vendored to `public/icons/` from
+ * lucide-static@0.544.0, so there is no runtime CDN dependency.
+ *
+ * The single place the icon-set substitution lives: swap the mask URL
+ * here and the whole site follows.
+ */
+interface Props {
+  name: string;
+  size?: number;
+  label?: string;
+  class?: string;
+}
+const { name, size = 18, label, class: className } = Astro.props;
+---
+<span
+  class:list={['icon', className]}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  style={`--icon-size:${size}px;--icon-url:url("/icons/${name}.svg")`}
+/>
+
+<style>
+  .icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-color: currentColor;
+    -webkit-mask-image: var(--icon-url);
+            mask-image: var(--icon-url);
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+            mask-position: center;
+    -webkit-mask-size: contain;
+            mask-size: contain;
+  }
+</style>

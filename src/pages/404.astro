@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Kicker from '../components/Kicker.astro';
+import Button from '../components/Button.astro';
+---
+
+<Base title="Not found" description="That page isn't here.">
+  <section class="notfound">
+    <div class="hatch" aria-hidden="true"></div>
+    <div class="notfound__inner container">
+      <Kicker tone="accent">404</Kicker>
+      <h1 class="notfound__title">That page isn't here.</h1>
+      <p class="notfound__body">
+        Either it moved, or it never existed. Both happen. The projects and the writing are still
+        where you left them.
+      </p>
+      <div class="notfound__actions">
+        <Button variant="primary" size="lg" icon="arrow-right" href="/">Back home</Button>
+        <Button variant="secondary" size="lg" href="/projects">See the work</Button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notfound { position: relative; overflow: hidden; }
+  .notfound__inner {
+    position: relative;
+    padding-block: var(--space-10) var(--space-11);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .notfound__title {
+    font-size: var(--text-5xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: -.04em;
+    line-height: var(--leading-tight);
+    color: var(--text-display);
+  }
+  .notfound__body {
+    font-family: var(--font-prose);
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    color: var(--text-muted);
+    max-width: var(--measure-prose);
+  }
+  .notfound__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3); }
+
+  @media (max-width: 720px) {
+    .notfound__title { font-size: var(--text-3xl); }
+  }
+</style>

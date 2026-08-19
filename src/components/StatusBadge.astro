@@ -1,0 +1,44 @@
+---
+/** Semantic colour is rationed to this component: 16% translucent tints on ink. */
+interface Props {
+  status?: 'active' | 'wip' | 'archived' | 'error' | 'info';
+  label?: string;
+}
+const { status = 'active', label } = Astro.props;
+const defaults: Record<string, string> = {
+  active: 'Active',
+  wip: 'In progress',
+  archived: 'Archived',
+  error: 'Error',
+  info: 'Note',
+};
+---
+<span class:list={['badge', `badge--${status}`]}>
+  <span class="badge__dot" aria-hidden="true" />
+  {label ?? defaults[status]}
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px var(--space-3) 3px var(--space-2);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-wide);
+    white-space: nowrap;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
+  }
+  .badge__dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor;
+  }
+  .badge--active   { --badge-bg: var(--status-active-bg);   --badge-fg: var(--status-active-fg); }
+  .badge--wip      { --badge-bg: var(--status-wip-bg);      --badge-fg: var(--status-wip-fg); }
+  .badge--archived { --badge-bg: var(--status-archived-bg); --badge-fg: var(--status-archived-fg); }
+  .badge--error    { --badge-bg: var(--status-error-bg);    --badge-fg: var(--status-error-fg); }
+  .badge--info     { --badge-bg: var(--status-info-bg);     --badge-fg: var(--status-info-fg); }
+</style>

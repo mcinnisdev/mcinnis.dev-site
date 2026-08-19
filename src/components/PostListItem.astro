@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+/** A writing entry: mono date + project tag, Space Grotesk title, serif standfirst. */
+interface Props {
+  href: string;
+  date: string;
+  project?: string;
+  title: string;
+  excerpt?: string;
+}
+const { href, date, project, title, excerpt } = Astro.props;
+---
+
+<a href={href} class="post-item">
+  <div class="post-item__meta">
+    <span>{date}</span>
+    {project && <span class="post-item__dot" aria-hidden="true"></span>}
+    {project && <span class="post-item__project">{project}</span>}
+  </div>
+  <h3 class="post-item__title">
+    {title}
+    <Icon name="arrow-up-right" size={16} class="post-item__arrow" />
+  </h3>
+  {excerpt && <p class="post-item__excerpt">{excerpt}</p>}
+</a>
+
+<style>
+  .post-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border-hairline);
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-control);
+  }
+  .post-item__meta {
+    display: flex; align-items: center; gap: var(--space-3);
+    font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-meta);
+  }
+  .post-item__dot { width: 3px; height: 3px; border-radius: 999px; background: var(--border-strong); }
+  .post-item__project { color: var(--text-accent); }
+
+  .post-item__title {
+    display: flex; align-items: baseline; gap: var(--space-2);
+    font-size: var(--text-xl); letter-spacing: var(--tracking-tight);
+    color: var(--text-display); transition: var(--transition-control);
+  }
+  .post-item:hover .post-item__title { color: var(--text-accent); }
+
+  .post-item__arrow { opacity: 0; transform: translate(-4px, 4px); transition: var(--transition-control); }
+  .post-item:hover .post-item__arrow { opacity: 1; transform: none; }
+
+  .post-item__excerpt {
+    font-family: var(--font-prose); font-size: var(--text-md);
+    line-height: var(--leading-relaxed); color: var(--text-muted);
+    max-width: var(--measure-prose);
+  }
+</style>

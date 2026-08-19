@@ -1,0 +1,223 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Kicker from '../components/Kicker.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SlantRule from '../components/SlantRule.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PostListItem from '../components/PostListItem.astro';
+import StatRow from '../components/StatRow.astro';
+import { site, heroStats } from '../data/site';
+import { formatDate } from '../utils/format';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const featured = projects.slice(0, 2);
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+<Base>
+  {/* ── hero: oversized name, hatch plate, skewed terracotta rail ── */}
+  <section class="hero">
+    <div class="hatch" aria-hidden="true"></div>
+    <div class="hero__rail" aria-hidden="true"></div>
+    <div class="hero__rail hero__rail--thin" aria-hidden="true"></div>
+
+    <div class="hero__inner container">
+      <div class="hero__content">
+        <Kicker icon="map-pin" tone="accent">{site.location} · 10+ years in IT</Kicker>
+
+        <h1 class="hero__title">Nick<br />McInnis</h1>
+
+        <p class="hero__lead">I build things that work — and keep working.</p>
+
+        <p class="hero__body">
+          Printers to M365 tenants, PowerShell to production web apps. Right now I'm deep in
+          agentic engineering — building tools that do real operational work instead of just
+          answering questions.
+        </p>
+
+        <div class="hero__actions">
+          <Button variant="primary" size="lg" icon="arrow-right" href="/projects">See the work</Button>
+          <Button variant="secondary" size="lg" href="/about">About me</Button>
+        </div>
+
+        <div class="hero__stats">
+          <StatRow items={heroStats} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── the work ── */}
+  <section class="section container">
+    <SectionHeader kicker="Currently building" title="The work">
+      <Button slot="action" variant="ghost" size="sm" icon="arrow-right" href="/projects">
+        All projects
+      </Button>
+    </SectionHeader>
+
+    <div class="stack section__list">
+      {featured.map((project, i) => (
+        <ProjectCard
+          index={project.data.order}
+          featured={i === 0}
+          title={project.data.title}
+          kicker={project.data.kicker}
+          status={project.data.status}
+          statusLabel={project.data.statusLabel}
+          description={project.data.summary}
+          tags={project.data.tags}
+          href={`/projects/${project.id}`}
+        />
+      ))}
+    </div>
+  </section>
+
+  {/* ── writing: sunken band ── */}
+  <section class="band">
+    <SlantRule height={10} density={7} />
+    <div class="band__inner container">
+      <SectionHeader kicker="Recent writing" title="Notes from the build">
+        <Button slot="action" variant="ghost" size="sm" icon="arrow-right" href="/blog">
+          All posts
+        </Button>
+      </SectionHeader>
+
+      <div class="stack">
+        {posts.map((post) => (
+          <PostListItem
+            href={`/blog/${post.id}`}
+            date={formatDate(post.data.date)}
+            project={post.data.project}
+            title={post.data.title}
+            excerpt={post.data.excerpt}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── contact strip ── */}
+  <section class="section container">
+    <div class="contact">
+      <div class="contact__hatch" aria-hidden="true"></div>
+      <div class="contact__copy">
+        <Kicker tone="accent">Get in touch</Kicker>
+        <h2 class="contact__title">Working on something interesting?</h2>
+      </div>
+      <Button variant="secondary" size="lg" icon="mail" iconPosition="left" href={`mailto:${site.email}`}>
+        {site.email}
+      </Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --- hero --- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+  .hero__rail {
+    position: absolute;
+    top: -40px; bottom: -40px;
+    right: 6%;
+    width: 130px;
+    background: var(--terracotta-500);
+    transform: skewX(var(--brand-slant));
+    opacity: .9;
+  }
+  .hero__rail--thin {
+    right: calc(6% + 150px);
+    width: 26px;
+    background: var(--terracotta-700);
+    opacity: 1;
+  }
+  .hero__inner { position: relative; padding-block: var(--space-10) var(--space-9); }
+  .hero__content { max-width: 62%; display: flex; flex-direction: column; gap: var(--space-5); }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: var(--text-6xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: -.045em;
+    line-height: .94;
+    color: var(--text-display);
+  }
+  .hero__lead {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-snug);
+    color: var(--terracotta-400);
+  }
+  .hero__body {
+    font-family: var(--font-prose);
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    color: var(--text-muted);
+    max-width: var(--measure-prose);
+  }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+  .hero__stats { margin-top: var(--space-5); max-width: 620px; }
+
+  /* --- sections --- */
+  .section { padding-block: var(--space-9); display: flex; flex-direction: column; gap: var(--space-5); }
+  .section__list { gap: var(--space-5); }
+
+  .band {
+    background: var(--surface-sunken);
+    border-block: 1px solid var(--border-hairline);
+  }
+  .band__inner { padding-block: var(--space-7) var(--space-8); display: flex; flex-direction: column; gap: var(--space-4); }
+
+  /* --- contact --- */
+  .contact {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-7);
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-card);
+  }
+  .contact__hatch {
+    position: absolute;
+    top: -20px; bottom: -20px; right: -10px;
+    width: 90px;
+    background-image: repeating-linear-gradient(108.4deg, var(--border-subtle) 0 1px, transparent 1px 8px);
+  }
+  .contact__copy { position: relative; display: flex; flex-direction: column; gap: var(--space-2); }
+  .contact__title {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-display);
+    color: var(--text-display);
+  }
+
+  @media (max-width: 900px) {
+    .hero__content { max-width: 100%; }
+    .hero__rail { right: -30px; width: 90px; }
+    .hero__rail--thin { display: none; }
+  }
+  @media (max-width: 720px) {
+    .hero__inner { padding-block: var(--space-8) var(--space-7); }
+    .hero__title { font-size: var(--text-4xl); }
+    .hero__lead { font-size: var(--text-xl); }
+    .hero__body { font-size: var(--text-lg); }
+    .section { padding-block: var(--space-8); }
+    .contact { padding: var(--space-5); }
+  }
+</style>

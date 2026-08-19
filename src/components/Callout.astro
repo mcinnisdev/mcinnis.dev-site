@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+/** Inline aside inside prose — disclaimers, archive notices, build-log asides. */
+interface Props {
+  tone?: 'note' | 'accent' | 'archived';
+  title?: string;
+  icon?: string;
+}
+const { tone = 'note', title, icon } = Astro.props;
+const defaultIcon = tone === 'accent' ? 'sparkle' : tone === 'archived' ? 'archive' : 'info';
+---
+<aside class:list={['callout', `callout--${tone}`]}>
+  <Icon name={icon ?? defaultIcon} size={18} class="callout__icon" />
+  <div class="callout__body">
+    {title && <strong class="callout__title">{title}</strong>}
+    <div class="callout__text"><slot /></div>
+  </div>
+</aside>
+
+<style>
+  .callout {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-left: 3px solid var(--callout-edge);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: var(--callout-bg);
+    color: var(--callout-fg);
+  }
+  .callout--note     { --callout-bg: var(--surface-sunken);      --callout-fg: var(--text-body);       --callout-edge: var(--border-strong); }
+  .callout--accent   { --callout-bg: var(--surface-accent-soft); --callout-fg: var(--terracotta-200);  --callout-edge: var(--terracotta-500); }
+  .callout--archived { --callout-bg: var(--surface-sunken);      --callout-fg: var(--text-muted);      --callout-edge: var(--ink-500); }
+
+  .callout__icon { margin-top: 2px; opacity: .8; }
+  .callout__body { display: flex; flex-direction: column; gap: var(--space-1); }
+  .callout__title { font-family: var(--font-ui); font-size: var(--text-base); font-weight: var(--weight-semibold); }
+  .callout__text { font-family: var(--font-prose); font-size: var(--text-md); line-height: var(--leading-relaxed); }
+  .callout__text :global(> * + *) { margin-top: var(--space-2); }
+</style>

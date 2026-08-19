@@ -1,0 +1,25 @@
+---
+/** The 18.4° hatch as a divider band — the brand's only decorative texture. */
+interface Props {
+  height?: number;
+  density?: number;
+  tone?: 'default' | 'accent' | 'strong';
+  class?: string;
+}
+const { height = 10, density = 8, tone = 'default', class: className } = Astro.props;
+const color = tone === 'accent' ? 'var(--terracotta-600)'
+  : tone === 'strong' ? 'rgba(250,247,244,.34)'
+  : 'rgba(250,247,244,.16)';
+---
+<div
+  aria-hidden="true"
+  class:list={['slant-rule', className]}
+  style={`height:${height}px;--slant-color:${color};--slant-density:${density}px`}
+/>
+
+<style>
+  .slant-rule {
+    background-image: repeating-linear-gradient(
+      108.4deg, var(--slant-color) 0 1px, transparent 1px var(--slant-density));
+  }
+</style>

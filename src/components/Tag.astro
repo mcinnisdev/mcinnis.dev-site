@@ -1,0 +1,27 @@
+---
+/** A stack chip. Sentence-cased, never shouted. */
+interface Props { tone?: 'default' | 'accent' }
+const { tone = 'default' } = Astro.props;
+---
+<span class:list={['tag', tone === 'accent' && 'tag--accent']}><slot /></span>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px var(--space-2);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-xs);
+    background: var(--surface-sunken);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-wide);
+    color: var(--text-meta);
+    white-space: nowrap;
+  }
+  .tag--accent {
+    border-color: color-mix(in oklab, var(--terracotta-500) 40%, transparent);
+    background: var(--surface-accent-soft);
+    color: var(--text-accent);
+  }
+</style>

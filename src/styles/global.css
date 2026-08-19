@@ -1,0 +1,123 @@
+/* ------------------------------------------------------------------
+   mcinnis.dev — global stylesheet.
+
+   Tokens are imported straight from `design-system/tokens/` so the
+   design system stays the single source of truth. Nothing below
+   redefines a token; this file only adds page-level primitives the
+   system's readme describes (container, prose, hatch, slant).
+
+   Fonts are loaded via <link> in Base.astro rather than the system's
+   `tokens/fonts.css` @import, so the CDN request is preconnected and
+   does not block this sheet.
+   ------------------------------------------------------------------ */
+@import "../../design-system/tokens/colors.css";
+@import "../../design-system/tokens/typography.css";
+@import "../../design-system/tokens/spacing.css";
+@import "../../design-system/tokens/shape.css";
+@import "../../design-system/tokens/motion.css";
+@import "../../design-system/tokens/base.css";
+
+/* --- page scaffolding ------------------------------------------- */
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body { min-height: 100%; }
+
+img, svg, video { max-width: 100%; height: auto; display: block; }
+
+/* Skip link — visible only on focus. */
+.skip-link {
+  position: absolute; left: var(--space-4); top: -100px; z-index: 100;
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-control);
+  background: var(--terracotta-500); color: var(--text-on-accent);
+  font-family: var(--font-ui); font-size: var(--text-sm); font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+.skip-link:focus { top: var(--space-4); }
+
+/* --- containers -------------------------------------------------- */
+
+.container { max-width: var(--container-max); margin-inline: auto; padding-inline: var(--gutter-inline); }
+.container--prose { max-width: var(--container-prose); }
+
+/* --- the 18.4° hatch, the system's one texture ------------------- */
+
+.hatch {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(
+    108.4deg, rgba(250, 247, 244, .10) 0 1px, transparent 1px var(--hatch-density, 11px));
+  -webkit-mask-image: radial-gradient(120% 90% at 80% 0%, #000 0%, transparent 72%);
+          mask-image: radial-gradient(120% 90% at 80% 0%, #000 0%, transparent 72%);
+}
+
+/* --- prose ------------------------------------------------------- */
+
+.prose {
+  font-family: var(--font-prose);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-body);
+  max-width: var(--measure-prose);
+}
+.prose > * + * { margin-top: var(--space-4); }
+.prose h2 {
+  font-family: var(--font-display); font-size: var(--text-xl);
+  font-weight: var(--weight-semibold); color: var(--text-display);
+  letter-spacing: var(--tracking-tight); margin-top: var(--space-7);
+}
+.prose h3 {
+  font-family: var(--font-display); font-size: var(--text-lg);
+  font-weight: var(--weight-semibold); color: var(--text-display);
+  margin-top: var(--space-6);
+}
+.prose ul, .prose ol { padding-left: var(--space-5); margin-block: 0; }
+.prose li + li { margin-top: var(--space-2); }
+.prose strong { color: var(--text-display); font-weight: var(--weight-semibold); }
+.prose code {
+  background: var(--surface-sunken); border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-xs); padding: .1em .35em; color: var(--text-muted);
+}
+.prose pre {
+  background: var(--surface-sunken); border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md); padding: var(--space-4); overflow-x: auto;
+  font-size: var(--text-sm); line-height: var(--leading-normal);
+}
+.prose pre code { background: none; border: 0; padding: 0; }
+.prose blockquote {
+  border-left: 2px solid var(--terracotta-500); padding-left: var(--space-4);
+  color: var(--text-muted); font-style: italic;
+}
+.prose hr { border: 0; border-top: 1px solid var(--border-hairline); margin-block: var(--space-7); }
+
+/* --- shared page-hero block -------------------------------------- */
+
+.page-hero {
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border-hairline);
+}
+.page-hero__inner { position: relative; padding-block: var(--space-9) var(--space-7); }
+.page-hero__title {
+  font-size: var(--text-5xl); font-weight: var(--weight-bold);
+  letter-spacing: -.04em; line-height: var(--leading-tight);
+  margin-top: var(--space-3);
+}
+.page-hero__lede {
+  font-family: var(--font-prose); font-size: var(--text-xl);
+  line-height: var(--leading-relaxed); color: var(--text-muted);
+  max-width: var(--measure-prose); margin-top: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  :root { --gutter-inline: var(--space-4); }
+  .page-hero__title { font-size: var(--text-3xl); }
+  .page-hero__lede { font-size: var(--text-lg); }
+}
+
+/* --- misc -------------------------------------------------------- */
+
+.stack { display: flex; flex-direction: column; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}

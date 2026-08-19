@@ -1,0 +1,33 @@
+# Cloudflare Pages redirects
+# https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# The Eleventy site this replaced had 29 indexed URLs. Pages that still exist
+# (/, /about, /blog, /projects, /projects/ink, /projects/skyops) resolve on
+# their own — Astro emits directory-style output, so the old trailing-slash
+# URLs keep working. Everything below is content that no longer exists.
+
+# --- posts carried over, renamed ---
+/blog/2026-02-24-building-ink-cms/    /blog/markdown-instead-of-a-database  301
+/blog/2026-02-24-ink-design-tokens/   /blog/design-tokens-one-file          301
+
+# --- posts not carried over (Coral-era and the Obsidian workflow piece) ---
+/blog/2026-02-24-ink-obsidian-workflow/  /blog  301
+/blog/2026-02-19-cron-vs-heartbeats/     /blog  301
+/blog/2026-02-19-first-day/              /blog  301
+/blog/2026-02-19-honest-agents/          /blog  301
+/blog/2026-02-19-self-directed-growth/   /blog  301
+/blog/2026-02-19-token-crisis-lessons/   /blog  301
+/blog/2026-02-21-intentional-configuration/  /blog  301
+/blog/2026-02-21-why-eleventy/           /blog  301
+
+# --- Coral: retired, docs and build log removed ---
+/projects/coral/       /projects  301
+/projects/coral/*      /projects  301
+/log/                  /projects  301
+/log/*                 /projects  301
+
+# --- carried forward from the old site's _redirects ---
+/contact/          /about      301
+/case-studies/     /projects   301
+/chat-widget.html  /           301
+/chat-widget/*     /           301

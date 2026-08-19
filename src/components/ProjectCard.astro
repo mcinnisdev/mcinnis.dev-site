@@ -1,0 +1,209 @@
+---
+import Tag from './Tag.astro';
+import StatusBadge from './StatusBadge.astro';
+import Icon from './Icon.astro';
+
+/**
+ * The site's signature block — deliberately not a generic card. An ink slab cut
+ * by a full-height 18.4° wedge carrying the entry's zero-padded index. Featured
+ * entries fill the wedge solid terracotta with an ink numeral; the rest hatch it
+ * and warm the hatch to terracotta on hover while the wedge widens 10px.
+ *
+ * Titles use the ` — ` form and split into a bold display name line plus a
+ * lighter descriptor line. Stack these full-width — the wedge column is what
+ * aligns a list.
+ */
+interface Props {
+  index: number;
+  title: string;
+  kicker?: string;
+  status?: 'active' | 'wip' | 'archived' | 'error' | 'info';
+  statusLabel?: string;
+  description?: string;
+  tags?: string[];
+  href: string;
+  featured?: boolean;
+}
+const {
+  index, title, kicker, status = 'active', statusLabel,
+  description, tags = [], href, featured = false,
+} = Astro.props;
+
+const [name, ...restParts] = title.split(' — ');
+const descriptor = restParts.join(' — ');
+const maxTags = featured ? 9 : 5;
+const shown = tags.slice(0, maxTags);
+const overflow = tags.length - shown.length;
+---
+
+<a href={href} class:list={['project-card', featured && 'project-card--featured']}>
+  <div class="project-card__wedge">
+    <span class="project-card__wedge-fill" aria-hidden="true"></span>
+    <span class="project-card__index">{String(index).padStart(2, '0')}</span>
+  </div>
+
+  <div class="project-card__body">
+    <div class="project-card__meta">
+      {kicker && <span class="project-card__kicker">{kicker}</span>}
+      <StatusBadge status={status} label={statusLabel} />
+    </div>
+
+    <h3 class="project-card__title">
+      <span class="project-card__name">{name}</span>
+      {descriptor && <span class="project-card__descriptor">{descriptor}</span>}
+    </h3>
+
+    {description && <p class="project-card__desc">{description}</p>}
+
+    <div class="project-card__footer">
+      <div class="project-card__tags">
+        {shown.map((t) => <Tag>{t}</Tag>)}
+        {overflow > 0 && <Tag tone="accent">+{overflow}</Tag>}
+      </div>
+      <span class="project-card__cta">
+        View <Icon name="arrow-right" size={14} class="project-card__cta-icon" />
+      </span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-1);
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-control);
+    --wedge-width: 84px;
+  }
+  .project-card--featured { --wedge-width: 108px; }
+
+  .project-card:hover {
+    border-color: var(--terracotta-500);
+    box-shadow: var(--shadow-2);
+    transform: var(--lift-hover);
+  }
+
+  /* --- the wedge: clipped so the diagonal never crosses into the copy --- */
+  .project-card__wedge {
+    position: relative;
+    flex: 0 0 auto;
+    width: var(--wedge-width);
+    overflow: hidden;
+    transition: width var(--dur-base) var(--ease-out);
+  }
+  .project-card:hover .project-card__wedge { width: calc(var(--wedge-width) + 10px); }
+
+  .project-card__wedge-fill {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 0, 100% 0, 58% 100%, 0 100%);
+    background: var(--surface-sunken);
+    background-image: repeating-linear-gradient(
+      108.4deg, rgba(250, 247, 244, .16) 0 1px, transparent 1px 8px);
+    transition: background-image var(--dur-base) var(--ease-standard);
+  }
+  .project-card:hover .project-card__wedge-fill {
+    background-image: repeating-linear-gradient(
+      108.4deg, rgba(224, 120, 80, .55) 0 1px, transparent 1px 8px);
+  }
+  .project-card--featured .project-card__wedge-fill,
+  .project-card--featured:hover .project-card__wedge-fill {
+    background: var(--terracotta-500);
+    background-image: none;
+  }
+
+  .project-card__index {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding-right: 22%;
+    font-family: var(--font-mono);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-medium);
+    color: var(--ink-300);
+    transition: var(--transition-control);
+  }
+  .project-card:hover .project-card__index { color: var(--terracotta-400); }
+  .project-card--featured .project-card__index,
+  .project-card--featured:hover .project-card__index {
+    font-size: var(--text-2xl);
+    color: var(--ink-900);
+  }
+
+  /* --- body --- */
+  .project-card__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+  }
+  .project-card--featured .project-card__body { padding: var(--space-6); }
+
+  .project-card__meta { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  .project-card__kicker {
+    font-family: var(--font-mono); font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-label); text-transform: uppercase;
+    color: var(--text-meta);
+  }
+
+  .project-card__title {
+    display: flex; flex-direction: column; gap: 2px;
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-snug);
+  }
+  .project-card__name {
+    font-size: var(--text-2xl); font-weight: var(--weight-bold);
+    color: var(--text-display); transition: var(--transition-control);
+  }
+  .project-card--featured .project-card__name { font-size: var(--text-3xl); }
+  .project-card:hover .project-card__name { color: var(--terracotta-400); }
+
+  .project-card__descriptor {
+    font-size: var(--text-md); font-weight: var(--weight-regular);
+    color: var(--text-muted); letter-spacing: var(--tracking-tight);
+  }
+  .project-card--featured .project-card__descriptor { font-size: var(--text-lg); }
+
+  .project-card__desc {
+    font-family: var(--font-prose); font-size: var(--text-md);
+    line-height: var(--leading-relaxed); color: var(--text-muted);
+    max-width: 62ch;
+  }
+  .project-card--featured .project-card__desc { font-size: var(--text-lg); }
+
+  .project-card__footer {
+    display: flex; align-items: center; gap: var(--space-4);
+    flex-wrap: wrap; margin-top: auto; padding-top: var(--space-2);
+  }
+  .project-card__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); flex: 1; min-width: 0; }
+  .project-card__cta {
+    display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide); text-transform: uppercase;
+    color: var(--text-meta); transition: var(--transition-control);
+  }
+  .project-card:hover .project-card__cta { color: var(--terracotta-400); }
+  .project-card__cta-icon { transition: transform var(--dur-base) var(--ease-out); }
+  .project-card:hover .project-card__cta-icon { transform: translateX(3px); }
+
+  @media (max-width: 720px) {
+    .project-card { --wedge-width: 54px; }
+    .project-card--featured { --wedge-width: 62px; }
+    .project-card__body,
+    .project-card--featured .project-card__body { padding: var(--space-4); }
+    .project-card__name,
+    .project-card--featured .project-card__name { font-size: var(--text-xl); }
+    .project-card--featured .project-card__desc { font-size: var(--text-md); }
+  }
+</style>

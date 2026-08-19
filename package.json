@@ -1,0 +1,22 @@
+{
+  "name": "mcinnis-dev",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "mcinnis.dev — personal site of Nick McInnis",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.4",
+    "lucide-static": "^0.544.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

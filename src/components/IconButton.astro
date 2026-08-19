@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+/** Square icon-only control — used for the social row on About. */
+interface Props {
+  icon: string;
+  label: string;
+  href?: string;
+  external?: boolean;
+}
+const { icon, label, href, external = false } = Astro.props;
+const Tag = href ? 'a' : 'button';
+const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+<Tag href={href} class="icon-btn" aria-label={label} title={label} {...extra}>
+  <Icon name={icon} size={18} />
+</Tag>
+
+<style>
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 40px; height: 40px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-control);
+    background: var(--surface-raised);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition-control);
+  }
+  .icon-btn:hover {
+    background: var(--ink-700);
+    border-color: var(--terracotta-500);
+    color: var(--text-accent);
+  }
+  .icon-btn:active { transform: scale(var(--press-scale)); }
+</style>

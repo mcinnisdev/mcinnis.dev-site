@@ -1,0 +1,42 @@
+---
+import Kicker from './Kicker.astro';
+/** Kicker + title + optional trailing action, above a hairline rule. */
+interface Props {
+  kicker?: string;
+  title?: string;
+  description?: string;
+}
+const { kicker, title, description } = Astro.props;
+const hasAction = Astro.slots.has('action');
+---
+<header class="section-header">
+  <div class="section-header__row">
+    <div class="section-header__titles">
+      {kicker && <Kicker>{kicker}</Kicker>}
+      {title && <h2 class="section-header__title">{title}</h2>}
+    </div>
+    {hasAction && <div class="section-header__action"><slot name="action" /></div>}
+  </div>
+  {description && <p class="section-header__desc">{description}</p>}
+  <div class="section-header__rule" aria-hidden="true" />
+</header>
+
+<style>
+  .section-header { display: flex; flex-direction: column; gap: var(--space-3); }
+  .section-header__row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: var(--space-5); flex-wrap: wrap;
+  }
+  .section-header__titles { display: flex; flex-direction: column; gap: var(--space-2); }
+  .section-header__title {
+    font-size: var(--text-2xl); color: var(--text-display);
+    letter-spacing: var(--tracking-tight);
+  }
+  .section-header__action { flex-shrink: 0; }
+  .section-header__desc {
+    font-family: var(--font-prose); font-size: var(--text-lg);
+    line-height: var(--leading-relaxed); color: var(--text-muted);
+    max-width: var(--measure-prose);
+  }
+  .section-header__rule { height: 1px; background: var(--border-hairline); margin-top: var(--space-1); }
+</style>

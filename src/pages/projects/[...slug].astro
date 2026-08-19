@@ -1,0 +1,197 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import Kicker from '../../components/Kicker.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import Tag from '../../components/Tag.astro';
+import Card from '../../components/Card.astro';
+import { formatDate } from '../../utils/format';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props { project: CollectionEntry<'projects'> }
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+
+const [name, ...restParts] = d.title.split(' — ');
+const descriptor = restParts.join(' — ');
+
+// Posts that name this project, for the sidebar.
+const related = (await getCollection('posts', ({ data }) => !data.draft))
+  .filter((post) => post.data.project === project.id)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Base title={name} description={d.summary}>
+  <section class="detail-hero">
+    <div class="hatch" aria-hidden="true"></div>
+    <div class="detail-hero__rail" aria-hidden="true"></div>
+
+    <div class="detail-hero__inner container">
+      <Button variant="ghost" size="sm" icon="arrow-left" iconPosition="left" href="/projects" class="detail-hero__back">
+        All projects
+      </Button>
+
+      <div class="detail-hero__meta">
+        <span class="detail-hero__index">{String(d.order).padStart(2, '0')}</span>
+        <StatusBadge status={d.status} label={d.statusLabel} />
+        <Kicker>{d.kicker}</Kicker>
+      </div>
+
+      <div class="detail-hero__titles">
+        <h1 class="detail-hero__title">{name}</h1>
+        {descriptor && <p class="detail-hero__descriptor">{descriptor}</p>}
+      </div>
+
+      <div class="detail-hero__tags">
+        {d.tags.map((t) => <Tag>{t}</Tag>)}
+      </div>
+    </div>
+  </section>
+
+  <div class="detail container">
+    <article class="prose detail__body">
+      <p class="detail__standfirst">{d.summary}</p>
+      <Content />
+    </article>
+
+    <aside class="detail__aside">
+      <Card variant="sunken">
+        <div class="meta-list">
+          {d.meta.map(([key, value]) => (
+            <div class="meta-list__row">
+              <span class="meta-list__key">{key}</span>
+              <span class="meta-list__value">{value}</span>
+            </div>
+          ))}
+        </div>
+        {d.link && (
+          <div class="detail__visit">
+            <Button variant="primary" size="sm" icon="arrow-up-right" href={d.link} external>
+              {d.linkLabel ?? 'Visit'}
+            </Button>
+          </div>
+        )}
+      </Card>
+
+      {related.length > 0 && (
+        <Card variant="accent">
+          <div class="related">
+            <Kicker tone="accent">Related writing</Kicker>
+            {related.map((post) => (
+              <a href={`/blog/${post.id}`} class="related__link">
+                <span class="related__date">{formatDate(post.data.date)}</span>
+                {post.data.title}
+              </a>
+            ))}
+          </div>
+        </Card>
+      )}
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .detail-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+  .detail-hero__rail {
+    position: absolute;
+    top: -40px; bottom: -40px; right: 4%;
+    width: 96px;
+    background: var(--terracotta-500);
+    transform: skewX(var(--brand-slant));
+    opacity: .85;
+  }
+  .detail-hero__inner {
+    position: relative;
+    padding-block: var(--space-7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .detail-hero__back { align-self: flex-start; margin-left: calc(var(--space-4) * -1); }
+
+  .detail-hero__meta { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  .detail-hero__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-medium);
+    color: var(--terracotta-400);
+  }
+
+  .detail-hero__titles { max-width: 68%; }
+  .detail-hero__title {
+    font-size: var(--text-5xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: -.04em;
+    line-height: .98;
+    color: var(--text-display);
+  }
+  .detail-hero__descriptor {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--text-muted);
+    letter-spacing: var(--tracking-tight);
+    margin-top: var(--space-2);
+  }
+  .detail-hero__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+
+  /* --- body + sticky sidebar --- */
+  .detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: var(--space-8);
+    padding-block: var(--space-8) var(--space-10);
+  }
+  .detail__standfirst {
+    font-size: var(--text-xl);
+    color: var(--text-display);
+  }
+  .detail__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-5));
+    align-self: start;
+  }
+
+  .meta-list { display: flex; flex-direction: column; gap: var(--space-3); }
+  .meta-list__row {
+    display: flex; justify-content: space-between; gap: var(--space-3);
+    font-family: var(--font-mono); font-size: var(--text-xs);
+  }
+  .meta-list__key { color: var(--text-meta); text-transform: uppercase; letter-spacing: var(--tracking-wide); }
+  .meta-list__value { color: var(--text-body); text-align: right; }
+  .detail__visit { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--border-hairline); }
+
+  .related { display: flex; flex-direction: column; gap: var(--space-3); }
+  .related__link {
+    display: flex; flex-direction: column; gap: 2px;
+    font-family: var(--font-display); font-size: var(--text-base);
+    font-weight: var(--weight-medium); color: var(--text-display);
+    text-decoration: none; line-height: var(--leading-snug);
+    transition: var(--transition-control);
+  }
+  .related__link:hover { color: var(--terracotta-300); }
+  .related__date { font-family: var(--font-mono); font-size: var(--text-2xs); color: var(--text-meta); }
+
+  @media (max-width: 900px) {
+    .detail { grid-template-columns: minmax(0, 1fr); }
+    .detail__aside { position: static; }
+    .detail-hero__titles { max-width: 100%; }
+  }
+  @media (max-width: 720px) {
+    .detail-hero__title { font-size: var(--text-3xl); }
+    .detail-hero__descriptor { font-size: var(--text-lg); }
+    .detail-hero__rail { right: -30px; width: 70px; }
+  }
+</style>

@@ -1,0 +1,186 @@
+---
+import { nav, site } from '../data/site';
+
+/**
+ * Site header. Sticky, ink veil + blur (the system's one use of blur), hairline
+ * base, and the brand's slanted-tab nav: each link sits in an 18.4°-skewed slab
+ * that fills terracotta when active. Labels stay upright and high-contrast.
+ */
+const { pathname } = Astro.url;
+const isCurrent = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="nav">
+  <div class="nav__inner container">
+    <a href="/" class="nav__brand">
+      <img src="/assets/logo.svg" alt="" width="28" height="28" />
+      <span class="nav__wordmark">
+        <span class="nav__name">{site.name}</span>
+        <span class="nav__domain">{site.domain}</span>
+      </span>
+    </a>
+
+    <button
+      type="button"
+      class="nav__toggle"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+    <nav id="primary-nav" class="nav__links" aria-label="Primary">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['nav__link', isCurrent(item.href) && 'nav__link--active']}
+          aria-current={isCurrent(item.href) ? 'page' : undefined}
+        >
+          <span class="nav__slab" aria-hidden="true"></span>
+          <span class="nav__label">{item.label}</span>
+          <span class="nav__underline" aria-hidden="true"></span>
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav__toggle');
+  const header = document.querySelector<HTMLElement>('.nav');
+  toggle?.addEventListener('click', () => {
+    const open = header?.classList.toggle('nav--open') ?? false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    min-height: var(--nav-height);
+    display: flex;
+    align-items: stretch;
+    background: var(--surface-veil);
+    -webkit-backdrop-filter: var(--blur-veil);
+            backdrop-filter: var(--blur-veil);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav__inner {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  /* --- brand lockup --- */
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+    flex-shrink: 0;
+    padding-block: var(--space-3);
+  }
+  .nav__wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav__name {
+    font-family: var(--font-display); font-size: var(--text-md);
+    font-weight: var(--weight-bold); letter-spacing: var(--tracking-tight);
+    color: var(--paper-0);
+  }
+  .nav__domain {
+    font-family: var(--font-mono); font-size: var(--text-2xs);
+    letter-spacing: var(--tracking-wide); color: var(--paper-300);
+  }
+
+  /* --- the slanted tabs --- */
+  .nav__links { display: flex; align-items: stretch; gap: var(--space-1); }
+  .nav__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-4);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--paper-100);
+    transition: var(--transition-control);
+  }
+  .nav__slab {
+    position: absolute;
+    inset: 12px 2px;
+    background: transparent;
+    transform: skewX(var(--brand-slant));
+    border-radius: var(--radius-xs);
+    transition: var(--transition-control);
+  }
+  .nav__label { position: relative; }
+  .nav__underline {
+    position: absolute;
+    left: 6px; right: 6px; bottom: 0;
+    height: 3px;
+    background: var(--terracotta-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .nav__link:hover { color: var(--paper-0); }
+  .nav__link:hover .nav__slab { background: rgba(250, 247, 244, .12); }
+
+  .nav__link--active { color: var(--ink-900); }
+  .nav__link--active:hover { color: var(--ink-900); }
+  .nav__link--active .nav__slab,
+  .nav__link--active:hover .nav__slab { background: var(--terracotta-500); }
+  .nav__link--active .nav__underline { transform: none; }
+
+  /* --- mobile disclosure --- */
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    align-self: center;
+    padding: 0 9px;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-control);
+    cursor: pointer;
+    transition: var(--transition-control);
+  }
+  .nav__toggle:hover { border-color: var(--border-strong); background: rgba(250, 247, 244, .06); }
+  .nav__toggle span {
+    display: block;
+    height: 1px;
+    background: var(--paper-50);
+    transition: transform var(--dur-fast) var(--ease-standard);
+  }
+
+  @media (max-width: 720px) {
+    .nav { flex-wrap: wrap; }
+    .nav__inner { flex-wrap: wrap; padding-block: 0; }
+    .nav__toggle { display: flex; }
+    .nav__links {
+      display: none;
+      flex-basis: 100%;
+      flex-direction: column;
+      gap: 0;
+      padding-bottom: var(--space-3);
+      border-top: 1px solid var(--border-hairline);
+    }
+    :global(.nav--open) .nav__links { display: flex; }
+    .nav__link { padding-block: var(--space-3); }
+    .nav__slab { inset: 4px 0; }
+    .nav__underline { display: none; }
+  }
+</style>

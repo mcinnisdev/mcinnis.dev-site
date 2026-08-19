@@ -1,0 +1,39 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Core — buttons, tags, badges" subtitle="Actions, mono chips, lifecycle badges and section kickers" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script></head>
+<body style="background:var(--surface-page);padding:20px"><div id="root"></div>
+<script type="text/babel">
+const { Button, IconButton, Tag, StatusBadge, Kicker } = window.McinnisDevDesignSystem_a1d2f2;
+const Row = ({label, children}) => (
+  <div style={{display:'flex',flexDirection:'column',gap:8}}>
+    <span className="ds-label">{label}</span>
+    <div style={{display:'flex',alignItems:'center',gap:12,flexWrap:'wrap'}}>{children}</div>
+  </div>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <div style={{display:'flex',flexDirection:'column',gap:18}}>
+    <Row label="Buttons">
+      <Button variant="primary" icon="arrow-right">See the work</Button>
+      <Button variant="secondary">About me</Button>
+      <Button variant="ghost" icon="arrow-up-right">All posts</Button>
+      <Button variant="primary" disabled>Disabled</Button>
+    </Row>
+    <Row label="Sizes / icon buttons">
+      <Button size="sm" variant="secondary">Small</Button>
+      <Button size="md" variant="secondary">Medium</Button>
+      <Button size="lg" variant="secondary">Large</Button>
+      <IconButton icon="github" label="GitHub" />
+      <IconButton icon="mail" label="Email" variant="outline" />
+      <IconButton icon="terminal" label="Terminal" variant="accent" />
+    </Row>
+    <Row label="Tags / status / kicker">
+      <Tag>Azure Functions</Tag><Tag tone="accent">Open source</Tag>
+      <StatusBadge status="active" /><StatusBadge status="wip" /><StatusBadge status="archived">Archived · Feb 2026</StatusBadge>
+      <Kicker icon="hammer" tone="accent">Currently building</Kicker>
+    </Row>
+  </div>
+);
+</script></body></html>

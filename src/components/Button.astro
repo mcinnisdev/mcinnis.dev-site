@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+/**
+ * The brand's action control: squared-off (4px), one terracotta primary per view.
+ * Hover brightens (500 → 400); press is scale only, no colour change.
+ */
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: string;
+  iconPosition?: 'left' | 'right';
+  href?: string;
+  external?: boolean;
+  class?: string;
+}
+const {
+  variant = 'primary', size = 'md', icon, iconPosition = 'right',
+  href, external = false, class: className,
+  // `slot` is consumed by the parent component; don't forward it to the DOM.
+  slot: _slot, ...rest
+} = Astro.props as Props & { slot?: string };
+const Tag = href ? 'a' : 'button';
+const iconSize = size === 'sm' ? 14 : size === 'lg' ? 18 : 16;
+const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+<Tag
+  href={href}
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
+  {...extra}
+  {...rest}
+>
+  {icon && iconPosition === 'left' && <Icon name={icon} size={iconSize} class="btn__icon btn__icon--lead" />}
+  <span><slot /></span>
+  {icon && iconPosition === 'right' && <Icon name={icon} size={iconSize} class="btn__icon btn__icon--trail" />}
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-control);
+    font-family: var(--font-ui);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-tight);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: var(--transition-control);
+  }
+  .btn:active { transform: scale(var(--press-scale)); }
+  .btn[disabled] { opacity: .42; cursor: not-allowed; }
+
+  .btn--sm { height: 32px; padding-inline: var(--space-3); font-size: var(--text-sm); gap: 6px; }
+  .btn--md { height: 40px; padding-inline: var(--space-4); font-size: var(--text-base); gap: 8px; }
+  .btn--lg { height: 48px; padding-inline: var(--space-5); font-size: var(--text-md); gap: 10px; }
+
+  .btn--primary {
+    background: var(--terracotta-500);
+    color: var(--text-on-accent);
+    border: 1px solid transparent;
+    box-shadow: var(--shadow-1);
+  }
+  .btn--primary:hover { background: var(--terracotta-400); box-shadow: var(--shadow-accent-glow); color: var(--text-on-accent); }
+
+  .btn--secondary {
+    background: var(--surface-raised);
+    color: var(--text-display);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-1);
+  }
+  .btn--secondary:hover { background: var(--ink-700); border-color: var(--border-strong); color: var(--text-display); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--text-accent);
+    border: 1px solid transparent;
+  }
+  .btn--ghost:hover { background: var(--surface-accent-soft); color: var(--text-accent); }
+
+  .btn--inverse {
+    background: var(--paper-50);
+    color: var(--ink-900);
+    border: 1px solid transparent;
+  }
+  .btn--inverse:hover { background: var(--paper-0); color: var(--ink-900); }
+
+  /* forward motion on the trailing edge, back on the leading edge */
+  .btn__icon { transition: transform var(--dur-base) var(--ease-out); }
+  .btn:hover .btn__icon--trail { transform: translateX(3px); }
+  .btn:hover .btn__icon--lead { transform: translateX(-3px); }
+</style>

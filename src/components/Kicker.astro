@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+/** The mono eyebrow — the only uppercase type in the system. 2–4 words, no punctuation. */
+interface Props {
+  icon?: string;
+  tone?: 'default' | 'accent';
+  class?: string;
+}
+const { icon, tone = 'default', class: className } = Astro.props;
+---
+<span class:list={['kicker', `kicker--${tone}`, className]}>
+  {icon && <Icon name={icon} size={12} />}
+  <slot />
+</span>
+
+<style>
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--text-meta);
+  }
+  .kicker--accent { color: var(--text-accent); }
+</style>

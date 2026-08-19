@@ -1,0 +1,4 @@
+/* Webfonts. NOTE: no vendor font binaries were supplied with the brand;
+   these are the nearest Google Fonts matches, loaded from the Google Fonts CDN.
+   Swap for self-hosted @font-face rules once real files exist. */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap");

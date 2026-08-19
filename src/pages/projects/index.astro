@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Kicker from '../../components/Kicker.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import SlantRule from '../../components/SlantRule.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const all = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const active = all.filter((p) => p.data.status !== 'archived');
+const archived = all.filter((p) => p.data.status === 'archived');
+---
+
+<Base
+  title="Projects"
+  description="Products, internal tools and automation — what Nick McInnis is building and has shipped."
+>
+  <section class="page-hero">
+    <div class="hatch" aria-hidden="true"></div>
+    <div class="page-hero__inner container">
+      <Kicker tone="accent">Projects</Kicker>
+      <h1 class="page-hero__title">Things I'm building</h1>
+      <p class="page-hero__lede">
+        Products, internal tools, and the automation underneath them. Shipped, in beta, and still
+        moving — with the context each one actually needs rather than a screenshot and a stack list.
+      </p>
+    </div>
+  </section>
+
+  <div class="projects container">
+    <section class="projects__group">
+      <SectionHeader kicker="Active" title="In flight" />
+      <div class="stack projects__list">
+        {active.map((project, i) => (
+          <ProjectCard
+            index={project.data.order}
+            featured={i === 0}
+            title={project.data.title}
+            kicker={project.data.kicker}
+            status={project.data.status}
+            statusLabel={project.data.statusLabel}
+            description={project.data.summary}
+            tags={project.data.tags}
+            href={`/projects/${project.id}`}
+          />
+        ))}
+      </div>
+    </section>
+
+    {archived.length > 0 && (
+      <section class="projects__group">
+        <SectionHeader kicker="Archived" title="Retired experiments" />
+        <div class="stack projects__list">
+          {archived.map((project) => (
+            <ProjectCard
+              index={project.data.order}
+              title={project.data.title}
+              kicker={project.data.kicker}
+              status={project.data.status}
+              statusLabel={project.data.statusLabel}
+              description={project.data.summary}
+              tags={project.data.tags}
+              href={`/projects/${project.id}`}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="more">
+      <SlantRule height={8} density={9} class="more__rule" />
+      <Kicker>More coming</Kicker>
+      <p class="more__body">
+        Ten-plus years produces a lot of half-documented work — web apps, desktop tools,
+        automations, M365 tenancy plumbing. The interesting ones get written up here over time.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .projects {
+    padding-block: var(--space-8) var(--space-10);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .projects__group { display: flex; flex-direction: column; gap: var(--space-4); }
+  .projects__list { gap: var(--space-4); }
+
+  .more {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-card);
+  }
+  .more__rule { position: absolute; inset: 0 0 auto 0; }
+  .more__body {
+    font-family: var(--font-prose);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--text-muted);
+    max-width: var(--measure-prose);
+  }
+</style>

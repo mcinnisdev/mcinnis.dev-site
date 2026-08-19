@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import Kicker from '../components/Kicker.astro';
+import Card from '../components/Card.astro';
+import Icon from '../components/Icon.astro';
+import IconButton from '../components/IconButton.astro';
+import TextLink from '../components/TextLink.astro';
+import StatRow from '../components/StatRow.astro';
+import SlantRule from '../components/SlantRule.astro';
+import PortraitSlot from '../components/PortraitSlot.astro';
+import headshot from '../assets/headshot.jpg';
+import Button from '../components/Button.astro';
+import { site, socials, aboutStats } from '../data/site';
+
+const focus = [
+  {
+    icon: 'terminal',
+    title: 'Agentic engineering',
+    body: 'Agents that do operational work rather than answer questions — scheduled, wired to real tools, and able to hand work to each other. Most of what I ship now lives here.',
+  },
+  {
+    icon: 'code',
+    title: 'Web products',
+    body: 'Design and build, end to end. The interesting problem is usually explanation, not layout: making a product people have never seen before make sense in the first ten seconds.',
+  },
+  {
+    icon: 'hammer',
+    title: 'IT operations',
+    body: 'M365 and Entra administration, network and desktop infrastructure, and the automation that makes the recurring half of a service desk disappear. Ten years of home turf.',
+  },
+];
+---
+
+<Base
+  title="About"
+  description="Nick McInnis — 10+ years in IT, now building agentic tools and web products from Michigan."
+>
+  <section class="about-hero">
+    <div class="hatch" aria-hidden="true"></div>
+    <div class="about-hero__inner container">
+      <div class="about-hero__grid">
+        <div class="about-hero__side">
+          <PortraitSlot image={headshot} alt="Nick McInnis" />
+          <div class="about-hero__socials">
+            {socials.map((link) => (
+              <IconButton icon={link.icon} label={link.label} href={link.href} external={link.external} />
+            ))}
+          </div>
+        </div>
+
+        <div class="about-hero__main">
+          <Kicker tone="accent">{site.name} · {site.location}</Kicker>
+
+          <h1 class="about-hero__title">Ten years of fixing it,<br />then building it properly.</h1>
+
+          <div class="prose">
+            <p>
+              I've been working in IT for over ten years. I've touched just about everything —
+              printers, M365 administration, network infrastructure, automations, complex web and
+              desktop applications, and a lot of things in between that I'm probably forgetting.
+            </p>
+            <p>
+              These days I'm most interested in building things that actually work and last:
+              practical tools, useful automations, and infrastructure that makes other work easier.
+              A fair amount of that is in the agentic space now — assistants and scheduled agents
+              that do real operational work instead of just answering questions.
+            </p>
+            <p>
+              This site is where that work gets documented, including the parts that didn't go
+              anywhere. Everything I try on a client's site has usually been tried on mine first, at
+              my own expense, where the only person inconvenienced when it goes wrong is me. The
+              <TextLink href="/projects">projects page</TextLink> has the details.
+            </p>
+          </div>
+
+          <StatRow items={aboutStats} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="focus container">
+    <div class="focus__head">
+      <Kicker>What I work on</Kicker>
+      <h2 class="focus__title">Three things, mostly</h2>
+    </div>
+    <div class="focus__grid">
+      {focus.map((item) => (
+        <Card variant="raised">
+          <div class="focus__card">
+            <Icon name={item.icon} size={20} class="focus__icon" />
+            <h3 class="focus__card-title">{item.title}</h3>
+            <p class="focus__card-body">{item.body}</p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </section>
+
+  <section class="band">
+    <SlantRule height={10} density={7} />
+    <div class="band__inner container">
+      <div class="band__copy">
+        <Kicker tone="accent">Elsewhere</Kicker>
+        <h2 class="band__title">I build sites for a living, too.</h2>
+        <p class="band__body">
+          Web Dens is the client side of this — one person, three projects at a time, design through
+          hosting. If you're here about a website rather than a side project, that's the door.
+        </p>
+      </div>
+      <Button variant="primary" size="lg" icon="arrow-up-right" href="https://webdens.com" external>
+        webdens.com
+      </Button>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+  .about-hero__inner { position: relative; padding-block: var(--space-9) var(--space-8); }
+  .about-hero__grid {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .about-hero__side { display: flex; flex-direction: column; gap: var(--space-4); }
+  .about-hero__socials { display: flex; gap: var(--space-2); }
+
+  .about-hero__main { display: flex; flex-direction: column; gap: var(--space-5); }
+  .about-hero__title {
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: -.04em;
+    line-height: var(--leading-tight);
+    color: var(--text-display);
+  }
+
+  /* --- focus cards --- */
+  .focus { padding-block: var(--space-9); display: flex; flex-direction: column; gap: var(--space-5); }
+  .focus__head { display: flex; flex-direction: column; gap: var(--space-2); }
+  .focus__title {
+    font-size: var(--text-2xl); font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-display); color: var(--text-display);
+  }
+  .focus__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+  }
+  .focus__card { display: flex; flex-direction: column; gap: var(--space-3); }
+  .focus__icon { color: var(--terracotta-400); }
+  .focus__card-title {
+    font-size: var(--text-lg); font-weight: var(--weight-semibold);
+    color: var(--text-display); letter-spacing: var(--tracking-tight);
+  }
+  .focus__card-body {
+    font-family: var(--font-prose); font-size: var(--text-md);
+    line-height: var(--leading-relaxed); color: var(--text-muted);
+  }
+
+  /* --- elsewhere band --- */
+  .band { background: var(--surface-sunken); border-block: 1px solid var(--border-hairline); }
+  .band__inner {
+    padding-block: var(--space-8);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    align-items: center;
+    justify-content: space-between;
+  }
+  .band__copy { display: flex; flex-direction: column; gap: var(--space-2); max-width: var(--measure-prose); }
+  .band__title {
+    font-size: var(--text-2xl); font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-display); color: var(--text-display);
+  }
+  .band__body {
+    font-family: var(--font-prose); font-size: var(--text-lg);
+    line-height: var(--leading-relaxed); color: var(--text-muted);
+  }
+
+  @media (max-width: 860px) {
+    .about-hero__grid { grid-template-columns: minmax(0, 1fr); }
+    .about-hero__side { max-width: 240px; }
+  }
+  @media (max-width: 720px) {
+    .about-hero__title { font-size: var(--text-2xl); }
+    .focus { padding-block: var(--space-8); }
+  }
+</style>
