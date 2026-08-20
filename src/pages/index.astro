@@ -8,6 +8,8 @@ import SlantRule from '../components/SlantRule.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PostListItem from '../components/PostListItem.astro';
 import StatRow from '../components/StatRow.astro';
+import PortraitSlot from '../components/PortraitSlot.astro';
+import headshot from '../assets/headshot.jpg';
 import { site, heroStats } from '../data/site';
 import { formatDate } from '../utils/format';
 import { siteBase, personSchema, websiteSchema } from '../utils/seo';
@@ -57,6 +59,10 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
         <div class="hero__stats">
           <StatRow items={heroStats} />
         </div>
+      </div>
+
+      <div class="hero__portrait">
+        <PortraitSlot image={headshot} alt="Illustrated portrait of Nick McInnis" />
       </div>
     </div>
   </section>
@@ -135,20 +141,37 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
   .hero__rail {
     position: absolute;
     top: -40px; bottom: -40px;
-    right: 6%;
-    width: 130px;
+    right: 2%;
+    width: 112px;
     background: var(--orange-500);
     transform: skewX(var(--brand-slant));
     opacity: .9;
   }
   .hero__rail--thin {
-    right: calc(6% + 150px);
-    width: 26px;
+    right: calc(2% + 138px);
+    width: 18px;
     background: var(--orange-700);
     opacity: 1;
   }
-  .hero__inner { position: relative; padding-block: var(--space-10) var(--space-9); }
-  .hero__content { max-width: 62%; display: flex; flex-direction: column; gap: var(--space-5); }
+  .hero__inner {
+    position: relative;
+    padding-block: var(--space-10) var(--space-9);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: var(--space-8);
+    align-items: center;
+  }
+  .hero__content { display: flex; flex-direction: column; gap: var(--space-5); }
+
+  /* A full-height skewed rail sweeps ~226px horizontally, so at container width
+     the portrait and the rails always overlap. Rather than fight it, the portrait
+     sits on the wedge — the same move the project card's index wedge makes. The
+     border goes to --border-strong so the frame reads on ink and on orange alike. */
+  .hero__portrait { width: 300px; }
+  .hero__portrait :global(.portrait) {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-2);
+  }
 
   .hero__title {
     font-family: var(--font-display);
@@ -214,9 +237,18 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     color: var(--text-display);
   }
 
-  @media (max-width: 900px) {
-    .hero__content { max-width: 100%; }
-    .hero__rail { right: -30px; width: 90px; }
+  @media (max-width: 1000px) {
+    .hero__inner { grid-template-columns: minmax(0, 1fr) 240px; gap: var(--space-6); }
+    .hero__portrait { width: 240px; }
+  }
+  @media (max-width: 860px) {
+    .hero__inner { grid-template-columns: minmax(0, 1fr); }
+    .hero__portrait { width: 220px; }
+    /* Stacked, the hero is ~1100px tall, and a full-height rail sweeps
+       tan(18.4°) × height ≈ 366px — straight through the stat labels. Anchor it
+       to the portrait row so it stays an edge accent instead of a diagonal
+       across the copy. */
+    .hero__rail { top: auto; bottom: -40px; height: 360px; right: -30px; width: 84px; }
     .hero__rail--thin { display: none; }
   }
   @media (max-width: 720px) {
