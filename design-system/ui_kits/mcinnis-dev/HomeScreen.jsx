@@ -4,18 +4,18 @@ function HomeScreen({ onNavigate }) {
   const S = window.SITE;
   return (
     <div>
-      {/* ── hero: oversized name, hatch plate, terracotta slab rail ── */}
+      {/* ── hero: oversized name, hatch plate, orange slab rail ── */}
       <section style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--border-hairline)' }}>
         <HatchField density={11} />
-        <div aria-hidden="true" style={{ position: 'absolute', top: -40, right: '6%', bottom: -40, width: 130, background: 'var(--terracotta-500)', transform: 'skewX(var(--brand-slant))', opacity: .9 }} />
-        <div aria-hidden="true" style={{ position: 'absolute', top: -40, right: 'calc(6% + 150px)', bottom: -40, width: 26, background: 'var(--terracotta-700)', transform: 'skewX(var(--brand-slant))' }} />
+        <div aria-hidden="true" style={{ position: 'absolute', top: -40, right: '6%', bottom: -40, width: 130, background: 'var(--orange-500)', transform: 'skewX(var(--brand-slant))', opacity: .9 }} />
+        <div aria-hidden="true" style={{ position: 'absolute', top: -40, right: 'calc(6% + 150px)', bottom: -40, width: 26, background: 'var(--orange-700)', transform: 'skewX(var(--brand-slant))' }} />
         <Container style={{ position: 'relative', paddingTop: 'var(--space-10)', paddingBottom: 'var(--space-9)' }}>
           <div style={{ maxWidth: '62%', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
             <Kicker icon="map-pin" tone="accent">Michigan · 10+ years in IT</Kicker>
             <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-6xl)', fontWeight: 'var(--weight-bold)', letterSpacing: '-.045em', lineHeight: '.94', color: 'var(--text-display)' }}>
               Nick<br />McInnis
             </h1>
-            <p style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', fontWeight: 'var(--weight-medium)', letterSpacing: 'var(--tracking-display)', color: 'var(--terracotta-400)', lineHeight: 'var(--leading-snug)' }}>
+            <p style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', fontWeight: 'var(--weight-medium)', letterSpacing: 'var(--tracking-display)', color: 'var(--orange-400)', lineHeight: 'var(--leading-snug)' }}>
               I build things that work — and keep working.
             </p>
             <p style={{ fontFamily: 'var(--font-prose)', fontSize: 'var(--text-xl)', lineHeight: 'var(--leading-relaxed)', color: 'var(--text-muted)', maxWidth: 'var(--measure-prose)' }}>
@@ -40,7 +40,7 @@ function HomeScreen({ onNavigate }) {
         <ProjectCard index={2} {...S.projects[1]} description={S.projects[1].summary} href="#" onOpen={() => onNavigate('project')} />
       </Container>
 
-      {/* ── writing: terracotta-wash band ── */}
+      {/* ── writing: orange-wash band ── */}
       <section style={{ position: 'relative', background: 'var(--surface-sunken)', borderTop: '1px solid var(--border-hairline)', borderBottom: '1px solid var(--border-hairline)' }}>
         <SlantRule height={10} density={7} />
         <Container style={{ paddingTop: 'var(--space-7)', paddingBottom: 'var(--space-8)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>

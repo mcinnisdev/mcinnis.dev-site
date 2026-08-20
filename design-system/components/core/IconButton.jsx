@@ -11,7 +11,7 @@ export function IconButton({ icon, size = 'md', variant = 'quiet', label, href, 
   const skins = {
     quiet: { background: hover ? 'var(--surface-sunken)' : 'transparent', color: hover ? 'var(--text-display)' : 'var(--text-muted)', border: '1px solid transparent' },
     outline: { background: hover ? 'var(--surface-sunken)' : 'var(--surface-raised)', color: 'var(--text-display)', border: '1px solid var(--border-subtle)' },
-    accent: { background: hover ? 'var(--terracotta-600)' : 'var(--terracotta-500)', color: 'var(--text-on-accent)', border: '1px solid transparent' },
+    accent: { background: hover ? 'var(--orange-600)' : 'var(--orange-500)', color: 'var(--text-on-accent)', border: '1px solid transparent' },
   };
   return (
     <Tag

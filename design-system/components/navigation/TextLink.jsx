@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Icon } from '../core/Icon.jsx';
 
-/** Inline link: terracotta, underline grows to full opacity on hover. */
+/** Inline link: orange, underline grows to full opacity on hover. */
 export function TextLink({ children, href, external = false, tone = 'accent', style, ...rest }) {
   const [hover, setHover] = useState(false);
   const color = tone === 'quiet' ? (hover ? 'var(--text-accent)' : 'var(--text-body)') : (hover ? 'var(--text-link-hover)' : 'var(--text-link)');

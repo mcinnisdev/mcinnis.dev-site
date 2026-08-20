@@ -6,8 +6,8 @@ import Icon from './Icon.astro';
 /**
  * The site's signature block — deliberately not a generic card. An ink slab cut
  * by a full-height 18.4° wedge carrying the entry's zero-padded index. Featured
- * entries fill the wedge solid terracotta with an ink numeral; the rest hatch it
- * and warm the hatch to terracotta on hover while the wedge widens 10px.
+ * entries fill the wedge solid orange with an ink numeral; the rest hatch it
+ * and warm the hatch to orange on hover while the wedge widens 10px.
  *
  * Titles use the ` — ` form and split into a bold display name line plus a
  * lighter descriptor line. Stack these full-width — the wedge column is what
@@ -85,7 +85,7 @@ const overflow = tags.length - shown.length;
   .project-card--featured { --wedge-width: 108px; }
 
   .project-card:hover {
-    border-color: var(--terracotta-500);
+    border-color: var(--orange-500);
     box-shadow: var(--shadow-2);
     transform: var(--lift-hover);
   }
@@ -111,11 +111,11 @@ const overflow = tags.length - shown.length;
   }
   .project-card:hover .project-card__wedge-fill {
     background-image: repeating-linear-gradient(
-      108.4deg, rgba(224, 120, 80, .55) 0 1px, transparent 1px 8px);
+      108.4deg, rgba(255,107,0, .55) 0 1px, transparent 1px 8px);
   }
   .project-card--featured .project-card__wedge-fill,
   .project-card--featured:hover .project-card__wedge-fill {
-    background: var(--terracotta-500);
+    background: var(--orange-500);
     background-image: none;
   }
 
@@ -131,7 +131,7 @@ const overflow = tags.length - shown.length;
     color: var(--ink-300);
     transition: var(--transition-control);
   }
-  .project-card:hover .project-card__index { color: var(--terracotta-400); }
+  .project-card:hover .project-card__index { color: var(--orange-400); }
   .project-card--featured .project-card__index,
   .project-card--featured:hover .project-card__index {
     font-size: var(--text-2xl);
@@ -167,7 +167,7 @@ const overflow = tags.length - shown.length;
     color: var(--text-display); transition: var(--transition-control);
   }
   .project-card--featured .project-card__name { font-size: var(--text-3xl); }
-  .project-card:hover .project-card__name { color: var(--terracotta-400); }
+  .project-card:hover .project-card__name { color: var(--orange-400); }
 
   .project-card__descriptor {
     font-size: var(--text-md); font-weight: var(--weight-regular);
@@ -193,7 +193,7 @@ const overflow = tags.length - shown.length;
     letter-spacing: var(--tracking-wide); text-transform: uppercase;
     color: var(--text-meta); transition: var(--transition-control);
   }
-  .project-card:hover .project-card__cta { color: var(--terracotta-400); }
+  .project-card:hover .project-card__cta { color: var(--orange-400); }
   .project-card__cta-icon { transition: transform var(--dur-base) var(--ease-out); }
   .project-card:hover .project-card__cta-icon { transform: translateX(3px); }
 

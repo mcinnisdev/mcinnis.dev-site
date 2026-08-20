@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 /**
- * The brand's action control: squared-off (4px), one terracotta primary per view.
+ * The brand's action control: squared-off (4px), one orange primary per view.
  * Hover brightens (500 → 400); press is scale only, no colour change.
  */
 interface Props {
@@ -56,12 +56,12 @@ const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   .btn--lg { height: 48px; padding-inline: var(--space-5); font-size: var(--text-md); gap: 10px; }
 
   .btn--primary {
-    background: var(--terracotta-500);
+    background: var(--orange-500);
     color: var(--text-on-accent);
     border: 1px solid transparent;
     box-shadow: var(--shadow-1);
   }
-  .btn--primary:hover { background: var(--terracotta-400); box-shadow: var(--shadow-accent-glow); color: var(--text-on-accent); }
+  .btn--primary:hover { background: var(--orange-400); box-shadow: var(--shadow-accent-glow); color: var(--text-on-accent); }
 
   .btn--secondary {
     background: var(--surface-raised);

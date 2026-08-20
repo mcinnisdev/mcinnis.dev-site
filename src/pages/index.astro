@@ -29,7 +29,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
   type="profile"
   schema={[personSchema(baseUrl), websiteSchema(baseUrl)]}
 >
-  {/* ── hero: oversized name, hatch plate, skewed terracotta rail ── */}
+  {/* ── hero: oversized name, hatch plate, skewed orange rail ── */}
   <section class="hero">
     <div class="hatch" aria-hidden="true"></div>
     <div class="hero__rail" aria-hidden="true"></div>
@@ -137,14 +137,14 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     top: -40px; bottom: -40px;
     right: 6%;
     width: 130px;
-    background: var(--terracotta-500);
+    background: var(--orange-500);
     transform: skewX(var(--brand-slant));
     opacity: .9;
   }
   .hero__rail--thin {
     right: calc(6% + 150px);
     width: 26px;
-    background: var(--terracotta-700);
+    background: var(--orange-700);
     opacity: 1;
   }
   .hero__inner { position: relative; padding-block: var(--space-10) var(--space-9); }
@@ -164,7 +164,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     font-weight: var(--weight-medium);
     letter-spacing: var(--tracking-display);
     line-height: var(--leading-snug);
-    color: var(--terracotta-400);
+    color: var(--orange-400);
   }
   .hero__body {
     font-family: var(--font-prose);

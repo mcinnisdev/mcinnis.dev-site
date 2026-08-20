@@ -7,11 +7,11 @@ function ProjectDetailScreen({ onNavigate }) {
     <div>
       <section style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid var(--border-hairline)' }}>
         <HatchField density={11} />
-        <div aria-hidden="true" style={{ position: 'absolute', top: -40, right: '4%', bottom: -40, width: 96, background: 'var(--terracotta-500)', transform: 'skewX(var(--brand-slant))', opacity: .85 }} />
+        <div aria-hidden="true" style={{ position: 'absolute', top: -40, right: '4%', bottom: -40, width: 96, background: 'var(--orange-500)', transform: 'skewX(var(--brand-slant))', opacity: .85 }} />
         <Container style={{ position: 'relative', paddingTop: 'var(--space-7)', paddingBottom: 'var(--space-7)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
           <Button variant="ghost" size="sm" icon="arrow-left" iconPosition="left" onClick={() => onNavigate('projects')} style={{ alignSelf: 'flex-start', marginLeft: 'calc(var(--space-4) * -1)' }}>All projects</Button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-2xl)', fontWeight: 'var(--weight-medium)', color: 'var(--terracotta-400)' }}>01</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-2xl)', fontWeight: 'var(--weight-medium)', color: 'var(--orange-400)' }}>01</span>
             <StatusBadge status={p.status} />
             <Kicker>Internal tool · Castle Rock Sky · 2025</Kicker>
           </div>

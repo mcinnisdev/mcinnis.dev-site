@@ -60,9 +60,9 @@ const tones = {
     icon: 'info'
   },
   accent: {
-    fg: 'var(--terracotta-200)',
+    fg: 'var(--orange-200)',
     bg: 'var(--surface-accent-soft)',
-    edge: 'var(--terracotta-500)',
+    edge: 'var(--orange-500)',
     icon: 'sparkle'
   },
   archived: {
@@ -238,7 +238,7 @@ function skin(variant, hover) {
   switch (variant) {
     case 'primary':
       return {
-        background: hover ? 'var(--terracotta-400)' : 'var(--terracotta-500)',
+        background: hover ? 'var(--orange-400)' : 'var(--orange-500)',
         color: 'var(--text-on-accent)',
         border: '1px solid transparent',
         boxShadow: hover ? 'var(--shadow-accent-glow)' : 'var(--shadow-1)'
@@ -269,7 +269,7 @@ function skin(variant, hover) {
   }
 }
 
-/** The brand's action control: squared-off, terracotta for the one primary action per view. */
+/** The brand's action control: squared-off, orange for the one primary action per view. */
 function Button({
   variant = 'primary',
   size = 'md',
@@ -362,7 +362,7 @@ function IconButton({
       border: '1px solid var(--border-subtle)'
     },
     accent: {
-      background: hover ? 'var(--terracotta-600)' : 'var(--terracotta-500)',
+      background: hover ? 'var(--orange-600)' : 'var(--orange-500)',
       color: 'var(--text-on-accent)',
       border: '1px solid transparent'
     }
@@ -509,8 +509,8 @@ function Tag({
     },
     accent: {
       background: 'var(--surface-accent-soft)',
-      color: 'var(--terracotta-700)',
-      border: '1px solid var(--terracotta-100)'
+      color: 'var(--orange-700)',
+      border: '1px solid var(--orange-100)'
     },
     inverse: {
       background: 'rgba(250,247,244,.06)',
@@ -544,7 +544,7 @@ const {
   useState
 } = React;
 /**
- * The site's signature block. An ink slab cut by a full-height 18.4° terracotta
+ * The site's signature block. An ink slab cut by a full-height 18.4° orange
  * wedge on the left carrying the project's index number; the wedge widens and
  * the hatch field brightens on hover. Title is display-scale, not card-scale.
  */
@@ -577,7 +577,7 @@ function ProjectCard({
       alignItems: 'stretch',
       overflow: 'hidden',
       background: 'var(--surface-card)',
-      border: '1px solid ' + (hover ? 'var(--terracotta-500)' : 'var(--border-subtle)'),
+      border: '1px solid ' + (hover ? 'var(--orange-500)' : 'var(--border-subtle)'),
       borderRadius: 'var(--radius-card)',
       boxShadow: hover ? 'var(--shadow-2)' : 'var(--shadow-1)',
       transform: hover ? 'var(--lift-hover)' : 'none',
@@ -599,8 +599,8 @@ function ProjectCard({
       position: 'absolute',
       inset: 0,
       clipPath: 'polygon(0 0, 100% 0, 58% 100%, 0 100%)',
-      background: featured ? 'var(--terracotta-500)' : 'var(--surface-sunken)',
-      backgroundImage: featured ? 'none' : `repeating-linear-gradient(108.4deg, ${hover ? 'rgba(224,120,80,.55)' : 'rgba(250,247,244,.16)'} 0 1px, transparent 1px 8px)`,
+      background: featured ? 'var(--orange-500)' : 'var(--surface-sunken)',
+      backgroundImage: featured ? 'none' : `repeating-linear-gradient(108.4deg, ${hover ? 'rgba(255,107,0,.55)' : 'rgba(250,247,244,.16)'} 0 1px, transparent 1px 8px)`,
       transition: 'background-image var(--dur-base) var(--ease-standard)'
     }
   }), /*#__PURE__*/React.createElement("span", {
@@ -613,7 +613,7 @@ function ProjectCard({
       fontFamily: 'var(--font-mono)',
       fontSize: featured ? 'var(--text-2xl)' : 'var(--text-xl)',
       fontWeight: 'var(--weight-medium)',
-      color: featured ? 'var(--ink-900)' : hover ? 'var(--terracotta-400)' : 'var(--ink-300)',
+      color: featured ? 'var(--ink-900)' : hover ? 'var(--orange-400)' : 'var(--ink-300)',
       transition: 'var(--transition-control)'
     }
   }, String(index).padStart(2, '0'))), /*#__PURE__*/React.createElement("div", {
@@ -655,7 +655,7 @@ function ProjectCard({
     style: {
       fontSize: featured ? 'var(--text-3xl)' : 'var(--text-2xl)',
       fontWeight: 'var(--weight-bold)',
-      color: hover ? 'var(--terracotta-400)' : 'var(--text-display)',
+      color: hover ? 'var(--orange-400)' : 'var(--text-display)',
       transition: 'var(--transition-control)'
     }
   }, name), rest_ && /*#__PURE__*/React.createElement("span", {
@@ -704,7 +704,7 @@ function ProjectCard({
       fontSize: 'var(--text-xs)',
       letterSpacing: 'var(--tracking-wide)',
       textTransform: 'uppercase',
-      color: hover ? 'var(--terracotta-400)' : 'var(--text-meta)',
+      color: hover ? 'var(--orange-400)' : 'var(--text-meta)',
       transition: 'var(--transition-control)'
     }
   }, "View ", /*#__PURE__*/React.createElement(__ds_scope.Icon, {
@@ -749,7 +749,7 @@ function Card({
     },
     accent: {
       background: 'var(--surface-accent-soft)',
-      border: '1px solid var(--terracotta-700)',
+      border: '1px solid var(--orange-700)',
       color: 'var(--text-body)'
     },
     outline: {
@@ -782,7 +782,7 @@ function Card({
       position: 'absolute',
       inset: '0 auto 0 0',
       width: 3,
-      background: 'var(--terracotta-500)'
+      background: 'var(--orange-500)'
     }
   }), children);
 }
@@ -865,7 +865,7 @@ function SlantRule({
   style,
   ...rest
 }) {
-  const color = tone === 'accent' ? 'var(--terracotta-600)' : tone === 'strong' ? 'rgba(250,247,244,.34)' : 'rgba(250,247,244,.16)';
+  const color = tone === 'accent' ? 'var(--orange-600)' : tone === 'strong' ? 'rgba(250,247,244,.34)' : 'rgba(250,247,244,.16)';
   return /*#__PURE__*/React.createElement("div", _extends({
     "aria-hidden": "true",
     style: {
@@ -886,7 +886,7 @@ const {
 } = React;
 /**
  * Site header. Ink, hairline base, and the brand's slanted-tab nav: each link
- * sits in an 18.4°-skewed slab (the logo's stroke angle) that fills terracotta
+ * sits in an 18.4°-skewed slab (the logo's stroke angle) that fills orange
  * when active. Labels stay upright and high-contrast.
  */
 function NavBar({
@@ -1005,7 +1005,7 @@ function NavBar({
       style: {
         position: 'absolute',
         inset: '12px 2px',
-        background: active ? 'var(--terracotta-500)' : hot ? 'rgba(250,247,244,.12)' : 'transparent',
+        background: active ? 'var(--orange-500)' : hot ? 'rgba(250,247,244,.12)' : 'transparent',
         transform: 'skewX(var(--brand-slant))',
         borderRadius: 'var(--radius-xs)',
         transition: 'var(--transition-control)'
@@ -1022,7 +1022,7 @@ function NavBar({
         right: 6,
         bottom: 0,
         height: 3,
-        background: 'var(--terracotta-500)',
+        background: 'var(--orange-500)',
         transform: active ? 'none' : 'scaleX(0)',
         transformOrigin: 'left',
         transition: 'transform var(--dur-base) var(--ease-out)'
@@ -1133,7 +1133,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 const {
   useState
 } = React;
-/** Inline link: terracotta, underline grows to full opacity on hover. */
+/** Inline link: orange, underline grows to full opacity on hover. */
 function TextLink({
   children,
   href,
@@ -1458,7 +1458,7 @@ function HomeScreen({
       right: '6%',
       bottom: -40,
       width: 130,
-      background: 'var(--terracotta-500)',
+      background: 'var(--orange-500)',
       transform: 'skewX(var(--brand-slant))',
       opacity: .9
     }
@@ -1470,7 +1470,7 @@ function HomeScreen({
       right: 'calc(6% + 150px)',
       bottom: -40,
       width: 26,
-      background: 'var(--terracotta-700)',
+      background: 'var(--orange-700)',
       transform: 'skewX(var(--brand-slant))'
     }
   }), /*#__PURE__*/React.createElement(Container, {
@@ -1504,7 +1504,7 @@ function HomeScreen({
       fontSize: 'var(--text-2xl)',
       fontWeight: 'var(--weight-medium)',
       letterSpacing: 'var(--tracking-display)',
-      color: 'var(--terracotta-400)',
+      color: 'var(--orange-400)',
       lineHeight: 'var(--leading-snug)'
     }
   }, "I build things that work \u2014 and keep working."), /*#__PURE__*/React.createElement("p", {
@@ -1693,7 +1693,7 @@ function ProjectDetailScreen({
       right: '4%',
       bottom: -40,
       width: 96,
-      background: 'var(--terracotta-500)',
+      background: 'var(--orange-500)',
       transform: 'skewX(var(--brand-slant))',
       opacity: .85
     }
@@ -1728,7 +1728,7 @@ function ProjectDetailScreen({
       fontFamily: 'var(--font-mono)',
       fontSize: 'var(--text-2xl)',
       fontWeight: 'var(--weight-medium)',
-      color: 'var(--terracotta-400)'
+      color: 'var(--orange-400)'
     }
   }, "01"), /*#__PURE__*/React.createElement(StatusBadge, {
     status: p.status

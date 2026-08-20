@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 /**
  * Site header. Ink, hairline base, and the brand's slanted-tab nav: each link
- * sits in an 18.4°-skewed slab (the logo's stroke angle) that fills terracotta
+ * sits in an 18.4°-skewed slab (the logo's stroke angle) that fills orange
  * when active. Labels stay upright and high-contrast.
  */
 export function NavBar({ items = [], current, onNavigate, logoSrc = 'assets/logo-paper.svg', wordmark = 'Nick McInnis', style, ...rest }) {
@@ -54,7 +54,7 @@ export function NavBar({ items = [], current, onNavigate, logoSrc = 'assets/logo
                   aria-hidden="true"
                   style={{
                     position: 'absolute', inset: '12px 2px',
-                    background: active ? 'var(--terracotta-500)' : hot ? 'rgba(250,247,244,.12)' : 'transparent',
+                    background: active ? 'var(--orange-500)' : hot ? 'rgba(250,247,244,.12)' : 'transparent',
                     transform: 'skewX(var(--brand-slant))', borderRadius: 'var(--radius-xs)',
                     transition: 'var(--transition-control)',
                   }}
@@ -64,7 +64,7 @@ export function NavBar({ items = [], current, onNavigate, logoSrc = 'assets/logo
                   aria-hidden="true"
                   style={{
                     position: 'absolute', left: 6, right: 6, bottom: 0, height: 3,
-                    background: 'var(--terracotta-500)',
+                    background: 'var(--orange-500)',
                     transform: active ? 'none' : 'scaleX(0)', transformOrigin: 'left',
                     transition: 'transform var(--dur-base) var(--ease-out)',
                   }}

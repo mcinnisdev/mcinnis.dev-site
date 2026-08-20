@@ -4,7 +4,7 @@ import { nav, site } from '../data/site';
 /**
  * Site header. Sticky, ink veil + blur (the system's one use of blur), hairline
  * base, and the brand's slanted-tab nav: each link sits in an 18.4°-skewed slab
- * that fills terracotta when active. Labels stay upright and high-contrast.
+ * that fills orange when active. Labels stay upright and high-contrast.
  */
 const { pathname } = Astro.url;
 const isCurrent = (href: string) =>
@@ -127,7 +127,7 @@ const isCurrent = (href: string) =>
     position: absolute;
     left: 6px; right: 6px; bottom: 0;
     height: 3px;
-    background: var(--terracotta-500);
+    background: var(--orange-500);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform var(--dur-base) var(--ease-out);
@@ -139,7 +139,7 @@ const isCurrent = (href: string) =>
   .nav__link--active { color: var(--ink-900); }
   .nav__link--active:hover { color: var(--ink-900); }
   .nav__link--active .nav__slab,
-  .nav__link--active:hover .nav__slab { background: var(--terracotta-500); }
+  .nav__link--active:hover .nav__slab { background: var(--orange-500); }
   .nav__link--active .nav__underline { transform: none; }
 
   /* --- mobile disclosure --- */

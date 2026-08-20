@@ -30,7 +30,7 @@ img, svg, video { max-width: 100%; height: auto; display: block; }
 .skip-link {
   position: absolute; left: var(--space-4); top: -100px; z-index: 100;
   padding: var(--space-2) var(--space-4); border-radius: var(--radius-control);
-  background: var(--terracotta-500); color: var(--text-on-accent);
+  background: var(--orange-500); color: var(--text-on-accent);
   font-family: var(--font-ui); font-size: var(--text-sm); font-weight: var(--weight-medium);
   text-decoration: none;
 }
@@ -85,7 +85,7 @@ img, svg, video { max-width: 100%; height: auto; display: block; }
 }
 .prose pre code { background: none; border: 0; padding: 0; }
 .prose blockquote {
-  border-left: 2px solid var(--terracotta-500); padding-left: var(--space-4);
+  border-left: 2px solid var(--orange-500); padding-left: var(--space-4);
   color: var(--text-muted); font-style: italic;
 }
 .prose hr { border: 0; border-top: 1px solid var(--border-hairline); margin-block: var(--space-7); }

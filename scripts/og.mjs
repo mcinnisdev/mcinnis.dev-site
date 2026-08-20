@@ -2,7 +2,7 @@
  * Generates 1200×630 Open Graph share cards into `public/og/`.
  *
  * One card per route, built from the same tokens as the site: ink ground, the
- * 18.4° hatch, skewed terracotta rails bleeding off the right edge, and the
+ * 18.4° hatch, skewed orange rails bleeding off the right edge, and the
  * portrait.
  *
  * Two layers, because each tool is good at one of them:
@@ -29,8 +29,8 @@ const OUT = join(ROOT, 'public', 'og');
 const INK_900 = '#14100e';
 const INK_200 = '#c0b6ae';
 const PAPER_50 = '#faf7f4';
-const TERRACOTTA = '#e07850';
-const TERRACOTTA_700 = '#9e4a2b';
+const ORANGE = '#ff6b00';
+const ORANGE_700 = '#ad3d00';
 const HAIRLINE = 'rgba(250,247,244,0.14)';
 
 const W = 1200;
@@ -60,8 +60,8 @@ const baseSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${
   </defs>
   <rect width="${W}" height="${H}" fill="${INK_900}"/>
   <rect width="${W}" height="${H}" fill="url(#hatch)"/>
-  ${rail(1120, 96, TERRACOTTA)}
-  ${rail(1010, 16, TERRACOTTA_700)}
+  ${rail(1120, 96, ORANGE)}
+  ${rail(1010, 16, ORANGE_700)}
 </svg>`;
 
 // --- satori element helpers ----------------------------------------------
@@ -94,7 +94,7 @@ function layout({ kicker, title, portraitSrc }) {
       [
         el('div', {
           display: 'flex', fontFamily: 'Mono', fontSize: 20, letterSpacing: 3,
-          color: TERRACOTTA, textTransform: 'uppercase', marginBottom: 24,
+          color: ORANGE, textTransform: 'uppercase', marginBottom: 24,
         }, kicker),
         el('div', {
           display: 'flex', fontFamily: 'Grotesk', fontSize: titleSize(title, narrow),
@@ -106,7 +106,7 @@ function layout({ kicker, title, portraitSrc }) {
           background: HAIRLINE, marginBottom: 24,
         }),
         row({ alignItems: 'center' }, [
-          el('div', { display: 'flex', width: 10, height: 10, borderRadius: 5, background: TERRACOTTA, marginRight: 14 }),
+          el('div', { display: 'flex', width: 10, height: 10, borderRadius: 5, background: ORANGE, marginRight: 14 }),
           el('div', { display: 'flex', fontFamily: 'Mono', fontSize: 22, color: INK_200, letterSpacing: 1 }, 'mcinnis.dev'),
         ]),
       ],

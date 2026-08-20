@@ -15,7 +15,7 @@ The fix is boring and it works: nothing in a template names a colour. Templates 
 Base values name the raw material:
 
 ```css
---terracotta-500: #e07850;
+--orange-500: #ff6b00;
 --ink-900: #14100e;
 --paper-50: #faf7f4;
 ```
@@ -25,10 +25,10 @@ Semantic aliases name the job:
 ```css
 --surface-page: var(--ink-900);
 --text-display: var(--paper-50);
---border-accent: var(--terracotta-500);
+--border-accent: var(--orange-500);
 ```
 
-Templates only ever reference the second group. A button is `var(--surface-accent)`, never `#e07850` and never `var(--terracotta-500)`. That one rule is what makes a swap safe — change the alias, and every element doing that job follows, while nothing that merely happened to be the same colour comes along by accident.
+Templates only ever reference the second group. A button is `var(--surface-accent)`, never `#ff6b00` and never `var(--orange-500)`. That one rule is what makes a swap safe — change the alias, and every element doing that job follows, while nothing that merely happened to be the same colour comes along by accident.
 
 ## Where it pays off
 

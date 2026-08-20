@@ -10,7 +10,7 @@ const sizes = {
 function skin(variant, hover) {
   switch (variant) {
     case 'primary':
-      return { background: hover ? 'var(--terracotta-400)' : 'var(--terracotta-500)', color: 'var(--text-on-accent)', border: '1px solid transparent', boxShadow: hover ? 'var(--shadow-accent-glow)' : 'var(--shadow-1)' };
+      return { background: hover ? 'var(--orange-400)' : 'var(--orange-500)', color: 'var(--text-on-accent)', border: '1px solid transparent', boxShadow: hover ? 'var(--shadow-accent-glow)' : 'var(--shadow-1)' };
     case 'secondary':
       return { background: hover ? 'var(--ink-700)' : 'var(--surface-raised)', color: 'var(--text-display)', border: '1px solid ' + (hover ? 'var(--border-strong)' : 'var(--border-subtle)'), boxShadow: 'var(--shadow-1)' };
     case 'ghost':
@@ -22,7 +22,7 @@ function skin(variant, hover) {
   }
 }
 
-/** The brand's action control: squared-off, terracotta for the one primary action per view. */
+/** The brand's action control: squared-off, orange for the one primary action per view. */
 export function Button({ variant = 'primary', size = 'md', icon, iconPosition = 'right', disabled, href, children, style, ...rest }) {
   const [hover, setHover] = useState(false);
   const [press, setPress] = useState(false);

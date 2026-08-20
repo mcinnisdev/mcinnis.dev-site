@@ -1,4 +1,4 @@
-The site's signature block: an ink slab cut by a full-height 18.4° wedge carrying the project's index number. Featured entries get a solid terracotta wedge; the rest get a hatched one that warms on hover.
+The site's signature block: an ink slab cut by a full-height 18.4° wedge carrying the project's index number. Featured entries get a solid orange wedge; the rest get a hatched one that warms on hover.
 
 ```jsx
 <ProjectCard index={1} featured title="SkyOps — M365 Automation & Operations"

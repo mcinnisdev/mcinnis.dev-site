@@ -4,7 +4,7 @@ import React from 'react';
 export function Tag({ children, tone = 'neutral', style, ...rest }) {
   const tones = {
     neutral: { background: 'var(--surface-sunken)', color: 'var(--text-muted)', border: '1px solid var(--border-subtle)' },
-    accent: { background: 'var(--surface-accent-soft)', color: 'var(--terracotta-700)', border: '1px solid var(--terracotta-100)' },
+    accent: { background: 'var(--surface-accent-soft)', color: 'var(--orange-700)', border: '1px solid var(--orange-100)' },
     inverse: { background: 'rgba(250,247,244,.06)', color: 'var(--text-on-inverse-muted)', border: '1px solid var(--border-inverse)' },
   };
   return (

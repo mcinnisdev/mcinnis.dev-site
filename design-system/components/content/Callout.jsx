@@ -3,7 +3,7 @@ import { Icon } from '../core/Icon.jsx';
 
 const tones = {
   note: { fg: 'var(--text-body)', bg: 'var(--surface-sunken)', edge: 'var(--border-strong)', icon: 'info' },
-  accent: { fg: 'var(--terracotta-200)', bg: 'var(--surface-accent-soft)', edge: 'var(--terracotta-500)', icon: 'sparkle' },
+  accent: { fg: 'var(--orange-200)', bg: 'var(--surface-accent-soft)', edge: 'var(--orange-500)', icon: 'sparkle' },
   archived: { fg: 'var(--text-muted)', bg: 'var(--surface-sunken)', edge: 'var(--ink-500)', icon: 'archive' },
 };
 

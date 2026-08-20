@@ -6,7 +6,7 @@ export function Card({ variant = 'raised', interactive = false, padding = 'var(-
   const skins = {
     raised: { background: 'var(--surface-card)', border: '1px solid var(--border-subtle)', color: 'var(--text-body)' },
     sunken: { background: 'var(--surface-sunken)', border: '1px solid var(--border-hairline)', color: 'var(--text-body)' },
-    accent: { background: 'var(--surface-accent-soft)', border: '1px solid var(--terracotta-700)', color: 'var(--text-body)' },
+    accent: { background: 'var(--surface-accent-soft)', border: '1px solid var(--orange-700)', color: 'var(--text-body)' },
     outline: { background: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text-body)' },
     paper: { background: 'var(--paper-50)', border: '1px solid var(--paper-200)', color: 'var(--ink-700)' },
   };
@@ -23,7 +23,7 @@ export function Card({ variant = 'raised', interactive = false, padding = 'var(-
       }}
       {...rest}
     >
-      {accentEdge && <span style={{ position: 'absolute', inset: '0 auto 0 0', width: 3, background: 'var(--terracotta-500)' }} />}
+      {accentEdge && <span style={{ position: 'absolute', inset: '0 auto 0 0', width: 3, background: 'var(--orange-500)' }} />}
       {children}
     </div>
   );

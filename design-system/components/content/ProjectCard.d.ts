@@ -19,7 +19,7 @@ export interface ProjectCardProps extends React.HTMLAttributes<HTMLElement> {
   tags?: string[];
   /** Presence adds the "View →" affordance. */
   href?: string;
-  /** Solid terracotta wedge + display-scale title — one per page. */
+  /** Solid orange wedge + display-scale title — one per page. */
   featured?: boolean;
   onOpen?: () => void;
 }

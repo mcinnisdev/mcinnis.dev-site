@@ -1,8 +1,8 @@
 :root{
-  /* --- base palette: terracotta (from the logo mark, #e07850) --- */
-  --terracotta-50:#fdf3ee;--terracotta-100:#f9e0d4;--terracotta-200:#f3c4ac;
-  --terracotta-300:#eda887;--terracotta-400:#e79068;--terracotta-500:#e07850;
-  --terracotta-600:#c55f39;--terracotta-700:#9e4a2b;--terracotta-800:#763720;--terracotta-900:#4a2214;
+  /* --- base palette: orange (Web Dens brand orange, #ff6b00) --- */
+  --orange-50:#fff6ed;--orange-100:#ffe7d1;--orange-200:#ffcea3;
+  --orange-300:#ffae6b;--orange-400:#ff8e38;--orange-500:#ff6b00;
+  --orange-600:#db5400;--orange-700:#ad3d00;--orange-800:#7d2903;--orange-900:#491704;
 
   /* --- base palette: ink (warm near-blacks) --- */
   --ink-950:#0c0a09;--ink-900:#14100e;--ink-800:#1d1917;--ink-700:#2a2523;
@@ -29,8 +29,8 @@
   --surface-card:var(--ink-800);
   --surface-inverse:var(--ink-950);        /* deepest band: footer, ink slabs */
   --surface-inverse-raised:var(--ink-950);
-  --surface-accent:var(--terracotta-500);
-  --surface-accent-soft:rgba(224,120,80,.14);
+  --surface-accent:var(--orange-500);
+  --surface-accent-soft:rgba(255,107,0,.14);
   --surface-veil:rgba(20,16,14,.94);        /* sticky header */
 
   /* text */
@@ -38,18 +38,18 @@
   --text-body:var(--paper-100);
   --text-muted:var(--ink-200);
   --text-meta:var(--ink-300);
-  --text-accent:var(--terracotta-400);
+  --text-accent:var(--orange-400);
   --text-on-accent:var(--ink-900);
   --text-on-inverse:var(--paper-50);
   --text-on-inverse-muted:var(--ink-200);
-  --text-link:var(--terracotta-400);
-  --text-link-hover:var(--terracotta-300);
+  --text-link:var(--orange-400);
+  --text-link-hover:var(--orange-300);
 
   /* borders */
   --border-hairline:rgba(250,247,244,.10);
   --border-subtle:rgba(250,247,244,.14);
   --border-strong:rgba(250,247,244,.26);
-  --border-accent:var(--terracotta-500);
+  --border-accent:var(--orange-500);
   --border-inverse:rgba(250,247,244,.14);
 
   /* status — translucent tints so they sit on ink without glowing */
@@ -59,23 +59,23 @@
   --status-error-fg:var(--rust-500);--status-error-bg:rgba(217,97,76,.16);
   --status-info-fg:var(--slate-500);--status-info-bg:rgba(123,157,181,.16);
 
-  --focus-ring:var(--terracotta-400);
-  --selection-bg:var(--terracotta-700);
+  --focus-ring:var(--orange-400);
+  --selection-bg:var(--orange-700);
 }
 /* The one light escape hatch: a print sheet or an embed on a white host page.
    Not a theme toggle — the site itself is always dark. */
 .on-paper{
   --surface-page:var(--paper-50);--surface-raised:var(--paper-0);
   --surface-sunken:var(--paper-100);--surface-card:var(--paper-0);
-  --surface-accent-soft:var(--terracotta-50);--surface-veil:rgba(250,247,244,.94);
+  --surface-accent-soft:var(--orange-50);--surface-veil:rgba(250,247,244,.94);
   --text-display:var(--ink-900);--text-body:var(--ink-700);
   --text-muted:var(--ink-500);--text-meta:var(--ink-400);
-  --text-accent:var(--terracotta-600);--text-on-accent:var(--paper-0);
-  --text-link:var(--terracotta-600);--text-link-hover:var(--terracotta-700);
+  --text-accent:var(--orange-600);--text-on-accent:var(--paper-0);
+  --text-link:var(--orange-600);--text-link-hover:var(--orange-700);
   --border-hairline:rgba(20,16,14,.08);--border-subtle:var(--paper-200);
   --border-strong:var(--paper-300);
   --status-active-bg:var(--moss-100);--status-wip-bg:var(--amber-100);
   --status-archived-bg:var(--paper-200);--status-error-bg:var(--rust-100);
   --status-info-bg:var(--slate-100);
-  --selection-bg:var(--terracotta-200);
+  --selection-bg:var(--orange-200);
 }
