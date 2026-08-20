@@ -140,6 +140,8 @@ async function collect(dir, prefix, kicker) {
   }
   for (const file of files) {
     const raw = await readFile(join(ROOT, 'src', 'content', dir, file), 'utf8');
+    // Drafts build no page, so they get no card.
+    if (/^draft:\s*true\s*$/m.test(raw)) continue;
     const m = raw.match(/^title:\s*["']?(.+?)["']?\s*$/m);
     if (!m) continue;
     // Project titles use the `Name — What it is` form; the card takes the name.
