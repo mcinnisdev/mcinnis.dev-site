@@ -87,8 +87,8 @@ These come from `design-system/readme.md`; the short version:
 - **First person, always.** Never "we". Understatement over claims.
 - **Sentence case** for headings and buttons. Mono kickers are the only uppercase.
 - **No emoji.** The em dash and the middot are the only decorative punctuation.
-- **One accent.** Terracotta `#e07850` — the active nav slab, the featured wedge, the one primary
-  button per view, links, kickers.
+- **One accent.** Orange `#ff6b00`, shared with Web Dens — the active nav slab, the featured wedge,
+  the one primary button per view, links, kickers.
 - **Dark only.** There is no light theme and no toggle. `.on-paper` exists for print, not for users.
 - **Hover brightens** on ink — the inverse of the light-mode instinct.
 - **The 18.4° cut is structural**, never ornament on body text: nav slabs, hero rails, the project
@@ -115,7 +115,7 @@ RSS feed at `/rss.xml` with atom self-link, per-item categories and enclosures.
 ### Share cards
 
 `scripts/og.mjs` generates a 1200×630 card per route into `public/og/`, built from the
-same tokens as the site — ink ground, the 18.4° hatch, skewed terracotta rails, and the
+same tokens as the site — ink ground, the 18.4° hatch, skewed orange rails, and the
 portrait on the home card. Two layers: an SVG base rasterised by sharp (exact rail
 geometry, which satori's `skewX` does not give) with satori type composited on top
 (glyphs become paths, so no system fonts are needed).
