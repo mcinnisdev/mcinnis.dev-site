@@ -6,11 +6,8 @@ summary: "A blog arguing that most small business sites — five pages that neve
 tags: ["Static HTML", "Cloudflare Pages", "Writing", "Performance", "Security"]
 order: 4
 featured: false
-# TODO: antiwp.com currently has AAAA records only — no A record, no www — so it
-# is unreachable from any IPv4-only network. Point both fields at the apex once
-# that is fixed.
-link: "https://antiwp.pages.dev"
-linkLabel: "antiwp.pages.dev"
+link: "https://antiwp.com"
+linkLabel: "antiwp.com"
 meta:
   - ["Status", "Live"]
   - ["Role", "Writing & build"]
