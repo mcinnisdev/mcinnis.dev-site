@@ -5,7 +5,7 @@ status: active
 statusLabel: "Live · beta"
 summary: "One project record with two faces: a page stakeholders read, and a workspace the collaborators and agents work from. Built for the case where an agent is doing the building and a person is steering, and the record goes stale between check-ins."
 tags: ["Product design", "Web app", "Agents", "MCP", "Status pages", "Docs"]
-order: 2
+order: 6
 featured: false
 link: "https://ticulate.com"
 linkLabel: "ticulate.com"

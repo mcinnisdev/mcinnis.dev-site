@@ -4,7 +4,7 @@ kicker: "Design & build · evenafter.me · 2026"
 status: active
 summary: "Record voice messages, write letters, upload photos — scheduled to reach the people you love on birthdays, anniversaries, and after you're gone. A product nobody goes looking for, about a subject people would rather not think about."
 tags: ["Product design", "Web app", "Voice", "Scheduling", "Sensitive UX"]
-order: 5
+order: 8
 featured: false
 link: "https://evenafter.me"
 linkLabel: "evenafter.me"

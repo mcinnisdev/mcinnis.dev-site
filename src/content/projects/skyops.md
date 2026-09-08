@@ -4,7 +4,7 @@ kicker: "Internal tool · Castle Rock Sky · 2025"
 status: active
 summary: "An internal automation platform for an MSP — the M365, ticketing, monitoring and billing toolchain pulled into one operational view, with reporting and the common remediations running on a schedule. Built on Azure Functions and Static Web Apps as Service Desk Manager."
 tags: ["Azure Functions", "Azure Static Web Apps", "M365", "PowerShell", "Graph", "Entra", "Internal tool"]
-order: 4
+order: 5
 featured: false
 meta:
   - ["Status", "Active · internal"]

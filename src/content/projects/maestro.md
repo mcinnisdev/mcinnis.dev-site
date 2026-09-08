@@ -5,7 +5,7 @@ status: active
 statusLabel: "Live · beta"
 summary: "Purpose-built agents you schedule and wire together into a score that keeps running while you don't. Not one general assistant — a roster of narrow ones for outreach, inbox triage, lead research and rank monitoring, each handing work to the next."
 tags: ["Product design", "Web app", "Agents", "Automation", "Scheduling", "Integrations"]
-order: 3
+order: 7
 featured: false
 link: "https://letmaestro.com"
 linkLabel: "letmaestro.com"

@@ -4,7 +4,7 @@ kicker: "Writing & build · antiwp.com · 2026"
 status: active
 summary: "A blog arguing that most small business sites — five pages that never change — do not need WordPress. Teardowns of what the platform actually costs over five years, what it exposes, and how to replace the parts you use with a form service and a free static host."
 tags: ["Static HTML", "Cloudflare Pages", "Writing", "Performance", "Security"]
-order: 6
+order: 4
 featured: false
 # TODO: antiwp.com currently has AAAA records only — no A record, no www — so it
 # is unreachable from any IPv4-only network. Point both fields at the apex once

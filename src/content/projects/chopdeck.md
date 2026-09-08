@@ -4,7 +4,7 @@ kicker: "Open source · chopdeck.com · 2026"
 status: active
 summary: "A sampler and sequencer in the shape of a late-90s hardware drum machine, running entirely in the browser. Chop a break onto the pads, record a sequence, mix it down. Free, MIT-licensed, works offline, and installs as a desktop app — no account needed to make a beat."
 tags: ["TypeScript", "Web Audio", "Web MIDI", "React", "Tauri", "Cloudflare D1", "Open source"]
-order: 7
+order: 2
 featured: false
 link: "https://chopdeck.com"
 linkLabel: "chopdeck.com"
